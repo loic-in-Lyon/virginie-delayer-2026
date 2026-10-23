@@ -105,12 +105,12 @@ const commonFields = {
 };
 
 export default config({
-  storage: process.env.NODE_ENV === 'development'
-    ? { kind: 'local' }
-    : {
-        kind: 'github',
-        repo: 'loic-in-Lyon/virginie-delayer-2026'
-      },
+  storage: {
+    kind: 'cloud',
+  },
+  cloud: {
+    project: 'virginie-delayer/virginie-delayer',
+  },
   collections: {
     soins: collection({
       label: 'Soins (Cabinet)',
