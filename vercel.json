@@ -1,0 +1,46 @@
+{
+  "redirects": [
+    {
+      "source": "/index.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/massages-soins.html",
+      "destination": "/massages-soins",
+      "permanent": true
+    },
+    {
+      "source": "/formations-massotherapie.html",
+      "destination": "/formations-massotherapie",
+      "permanent": true
+    },
+    {
+      "source": "/a-propos-massotherapeute-virginiedelayer.html",
+      "destination": "/a-propos-massotherapeute-virginiedelayer",
+      "permanent": true
+    },
+    {
+      "source": "/massage-soin.html",
+      "has": [
+        {
+          "type": "query",
+          "key": "slug"
+        }
+      ],
+      "destination": "/massages-soins",
+      "permanent": true
+    },
+    {
+      "source": "/formation-massotherapie.html",
+      "has": [
+        {
+          "type": "query",
+          "key": "slug"
+        }
+      ],
+      "destination": "/formations-massotherapie",
+      "permanent": true
+    }
+  ]
+}
