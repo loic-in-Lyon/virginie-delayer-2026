@@ -189,7 +189,7 @@ p {
 }
 
 body {
-  overflow: hidden;
+  /* overflow: hidden; */
   font-family: "Inter", system-ui, sans-serif;
   background: linear-gradient(
     var(--color-bg-1),
