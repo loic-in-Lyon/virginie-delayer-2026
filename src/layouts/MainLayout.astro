@@ -1,0 +1,58 @@
+---
+import "../styles/global.css";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+
+interface Props {
+  title: string;
+  description?: string;
+  bodyId?: string;
+}
+
+const {
+  title,
+  description = "Massages bien-être et soins énergétiques à Oullins, près de Lyon.",
+  bodyId,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="Virginie Delayer" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/avif" href="/logo-60.avif" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  </head>
+
+  <body id={bodyId}>
+    <!-- Navigation Sticky toujours accessible -->
+    <Navbar />
+
+    <slot />
+
+    <!-- Footer global -->
+    <Footer />
+
+    <!-- Scripts AOS & Lenis -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@latest/dist/lenis.min.js"
+    ></script>
+    <script>
+      const lenis = new Lenis();
+      function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+      }
+      requestAnimationFrame(raf);
+    </script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+      AOS.init();
+    </script>
+  </body>
+</html>

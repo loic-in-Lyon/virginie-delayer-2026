@@ -1,0 +1,153 @@
+---
+interface Props {
+  benefits?: string[];
+  targetAudience?: string[];
+}
+
+const {
+  benefits = [],
+  targetAudience = []
+} = Astro.props;
+
+// Nettoyage des accents pour les surtitres en Priestacy
+function removeAccents(str: string) {
+  if (!str) return "";
+  return str
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/œ/g, "oe")
+    .replace(/Œ/g, "OE");
+}
+
+const tagBenefits = removeAccents("Ce que ce soin vous apporte");
+const tagTarget = removeAccents("À qui s'adresse ce soin ?");
+---
+
+{((benefits && benefits.length > 0) || (targetAudience && targetAudience.length > 0)) && (
+  <section class="vd-features-section">
+    <div class="vd-section-container">
+      <div class="vd-features-grid">
+
+        <!-- Carte 1 : Bienfaits -->
+        {benefits && benefits.length > 0 && (
+          <div class="vd-glass-card vd-feature-card">
+            <span class="vd-card-tagline">{tagBenefits}</span>
+            <h3 class="vd-feature-title">Bienfaits</h3>
+            <ul class="vd-feature-list">
+              {benefits.map((benefit) => (
+                <li>
+                  <span class="vd-check-icon">✓</span>
+                  <span>{benefit}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        <!-- Carte 2 : Pour qui ? -->
+        {targetAudience && targetAudience.length > 0 && (
+          <div class="vd-glass-card vd-feature-card">
+            <span class="vd-card-tagline">{tagTarget}</span>
+            <h3 class="vd-feature-title">Pour qui ?</h3>
+            <ul class="vd-feature-list">
+              {targetAudience.map((target) => (
+                <li>
+                  <span class="vd-check-icon">✦</span>
+                  <span>{target}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+      </div>
+    </div>
+  </section>
+)}
+
+<style>
+  .vd-features-section {
+    padding: 1.5rem 0 2.5rem 0 !important;
+    width: 100% !important;
+  }
+
+  .vd-section-container {
+    max-width: 820px !important;
+    margin: 0 auto !important;
+    padding: 0 1.5rem !important;
+    box-sizing: border-box !important;
+  }
+
+  .vd-glass-card {
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.95) !important;
+    border-radius: 20px !important;
+    box-shadow: 0 8px 25px rgba(136, 36, 84, 0.03), inset 0 1px 1px rgba(255, 255, 255, 1) !important;
+  }
+
+  .vd-features-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)) !important;
+    gap: 1.5rem !important;
+  }
+
+  .vd-feature-card {
+    padding: 2.25rem 2.5rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    text-align: left !important;
+  }
+
+  .vd-card-tagline {
+    font-family: "Priestacy", cursive !important;
+    font-size: 1.35rem !important;
+    color: #882454 !important;
+    margin-bottom: 0.15rem !important;
+    display: block !important;
+  }
+
+  .vd-feature-title {
+    font-family: "Nicholas", serif !important;
+    font-size: 1.85rem !important;
+    color: #4f2613 !important;
+    margin: 0 0 1.25rem 0 !important;
+    font-weight: 300 !important;
+  }
+
+  .vd-feature-list {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.85rem !important;
+  }
+
+  .vd-feature-list li {
+    display: flex !important;
+    align-items: flex-start !important;
+    gap: 0.75rem !important;
+    font-size: 0.9rem !important;
+    color: #555555 !important;
+    line-height: 1.5 !important;
+  }
+
+  .vd-check-icon {
+    color: #882454 !important;
+    font-weight: bold !important;
+    font-size: 0.95rem !important;
+    line-height: 1.3 !important;
+  }
+
+  @media (max-width: 640px) {
+    .vd-features-grid {
+      grid-template-columns: 1fr !important;
+    }
+
+    .vd-feature-card {
+      padding: 1.75rem 1.5rem !important;
+    }
+  }
+</style>

@@ -1,0 +1,110 @@
+---
+interface ItemNav {
+  slug: string;
+  title: string;
+}
+
+interface Props {
+  prevItem?: ItemNav;
+  nextItem?: ItemNav;
+  basePath?: string; // Ex: "/soins", "/formations", "/formations-distance"
+  labelPrev?: string; // Ex: "Soin précédent" ou "Formation précédente"
+  labelNext?: string; // Ex: "Soin suivant" ou "Formation suivante"
+}
+
+const {
+  prevItem,
+  nextItem,
+  basePath = "/soins",
+  labelPrev = "Soin précédent",
+  labelNext = "Soin suivant",
+} = Astro.props;
+
+function removeAccents(str: string) {
+  if (!str) return "";
+  return str
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/Æ/g, "AE")
+    .replace(/æ/g, "ae")
+    .replace(/Œ/g, "OE")
+    .replace(/œ/g, "oe");
+}
+
+const cleanBasePath = basePath.endsWith("/") ? basePath.slice(0, -1) : basePath;
+---
+
+{
+  (prevItem || nextItem) && (
+    <section class="vd-nav-bottom-section">
+      <div class="vd-section-container">
+        <div class="vd-soin-nav-grid">
+          {prevItem && (
+            <a
+              href={`${cleanBasePath}/${prevItem.slug}`}
+              class="vd-glass-card vd-nav-card vd-nav-prev"
+            >
+              <span class="vd-nav-label">← {labelPrev}</span>
+              <span class="vd-nav-title">{removeAccents(prevItem.title)}</span>
+            </a>
+          )}
+
+          {nextItem && (
+            <a
+              href={`${cleanBasePath}/${nextItem.slug}`}
+              class="vd-glass-card vd-nav-card vd-nav-next"
+            >
+              <span class="vd-nav-label">{labelNext} →</span>
+              <span class="vd-nav-title">{removeAccents(nextItem.title)}</span>
+            </a>
+          )}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .vd-nav-bottom-section {
+    padding: 3rem 1.5rem 5rem 1.5rem;
+  }
+  .vd-section-container {
+    max-width: 1120px;
+    margin: 0 auto;
+  }
+  .vd-soin-nav-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  .vd-nav-card {
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+    text-decoration: none;
+    border-radius: 16px;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+  .vd-nav-card:hover {
+    transform: translateY(-3px);
+  }
+  .vd-nav-next {
+    text-align: right;
+    margin-left: auto;
+    width: 100%;
+  }
+  .vd-nav-label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #882454;
+    margin-bottom: 0.35rem;
+  }
+  .vd-nav-title {
+    font-family: "Nicholas", serif;
+    font-size: 1.25rem;
+    color: #4f2613;
+  }
+</style>

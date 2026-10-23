@@ -1,0 +1,39 @@
+{
+  "title": "Californien",
+  "subtitle": "Détente corporelle et relaxation profonde",
+  "metaTitle": "Formation Massage Californien en Présentiel",
+  "metaDescription": "Initiez-vous au massage californien. Technique de relaxation réputée, mouvements lents et circulaires pour débutants et professionnels.",
+  "duree": "1 jour",
+  "prix": "280",
+  "targetAudience": [
+    "Débutants souhaitant s'initier à l'art du massage de relaxation",
+    "Professionnels voulant maîtriser les bases du massage enveloppant anti-stress",
+    "Personnes en reconversion professionnelle dans le secteur du bien-être"
+  ],
+  "prerequis": "Idéal pour débuter dans l'art du massage",
+  "resume": "Détente corporelle",
+  "content": "La formation en massage californien vous initiera à cette technique de relaxation réputée pour sa douceur et son efficacité à réduire le stress et l'anxiété. Ce type de massage utilise des mouvements lents et circulaires, favorisant ainsi une meilleure circulation sanguine et lymphatique.",
+  "programme": [
+    "Apprentissage des mouvements lents et circulaires",
+    "Techniques de lissage et de détente musculaire",
+    "Mise en pratique encadrée"
+  ],
+  "benefits": [
+    "Détente musculaire ciblée",
+    "Réduction efficace du stress et de l'anxiété",
+    "Excellente base pour débuter dans le massage"
+  ],
+  "faq": [
+    {
+      "question": "La formation en massage californien inclut-elle de la pratique ?",
+      "answer": "Oui, la formation est axée sur la pratique en binôme afin d'intégrer la posture et l'enchaînement des mouvements."
+    },
+    {
+      "question": "Obtiens-je une attestation à l'issue de la journée ?",
+      "answer": "Oui, un certificat de réalisation vous est remis à la fin de la formation."
+    }
+  ],
+  "featured": false,
+  "isNew": false,
+  "draft": false
+}

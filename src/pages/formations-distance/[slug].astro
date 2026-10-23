@@ -1,0 +1,247 @@
+---
+import { getCollection } from "astro:content";
+import MainLayout from "../../layouts/MainLayout.astro";
+import CalloutSection from "../../components/ui/CalloutSection.astro";
+
+// Import des composants modulaires
+import SoinHero from "../../components/sections/SoinHero.astro";
+import SoinAbout from "../../components/sections/SoinAbout.astro";
+import SoinFeatures from "../../components/sections/SoinFeatures.astro";
+import SoinFaq from "../../components/sections/SoinFaq.astro";
+import SoinNavBottom from "../../components/sections/SoinNavBottom.astro";
+
+// 1. Génération des routes statiques
+export async function getStaticPaths() {
+  const formationsDistance = await getCollection(
+    "formations-distance",
+    ({ data }) => !data.draft,
+  );
+
+  return formationsDistance.map((item, index) => {
+    const prevItem =
+      formationsDistance[
+        index === 0 ? formationsDistance.length - 1 : index - 1
+      ];
+    const nextItem =
+      formationsDistance[
+        index === formationsDistance.length - 1 ? 0 : index + 1
+      ];
+
+    const slugKey = item.slug || item.id;
+
+    return {
+      params: { slug: slugKey },
+      props: { formation: item, prevItem, nextItem },
+    };
+  });
+}
+
+const { formation, prevItem, nextItem } = Astro.props;
+
+// Propriétés issues de la collection
+const {
+  title,
+  subtitle,
+  duree,
+  prix,
+  resume,
+  content,
+  benefits = [],
+  targetAudience = [],
+  faq = [],
+  checkoutUrl,
+  materielRequis = [],
+  categorie = "Formation en Ligne",
+} = formation.data;
+
+const prevRef = {
+  slug: prevItem.slug || prevItem.id,
+  title: prevItem.data.title,
+};
+
+const nextRef = {
+  slug: nextItem.slug || nextItem.id,
+  title: nextItem.data.title,
+};
+
+// SEO Schema.org
+const schemaBreadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Accueil",
+      item: "https://virginie-delayer.com",
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Formations en ligne",
+      item: "https://virginie-delayer.com/formations-distance",
+    },
+    {
+      "@type": "ListItem",
+      position: 3,
+      name: title,
+      item: `https://virginie-delayer.com/formations-distance/${
+        formation.slug || formation.id
+      }`,
+    },
+  ],
+};
+---
+
+<MainLayout
+  title={`${title} | Formation en Ligne - Virginie Delayer`}
+  description={resume || subtitle}
+  bodyId="detail-formation-distance"
+>
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify(schemaBreadcrumb)}
+  />
+
+  <!-- 1. Hero Section (Pointe vers le lien de paiement si dispo, sinon /contact) -->
+  <SoinHero
+    title={title}
+    parentTitle="Formations en Ligne"
+    parentHref="/formations-distance"
+    categorie={categorie}
+    duree={duree}
+    prix={prix}
+    description={resume || subtitle}
+    reservationLink={checkoutUrl || "/contact"}
+    buttonText={checkoutUrl ? "S'inscrire maintenant" : "Se renseigner"}
+  />
+
+  <!-- 2. À propos / Programme de la formation -->
+  <SoinAbout content={content} title="À propos de ce programme e-learning" />
+
+  <!-- 3. Matériel Requis (Spécifique aux formations à distance) -->
+  {
+    materielRequis && materielRequis.length > 0 && (
+      <section class="vd-materiel-section">
+        <div class="vd-container">
+          <div class="vd-glass-card vd-materiel-card">
+            <div class="vd-materiel-header">
+              <span class="vd-materiel-icon">🧰</span>
+              <h2 class="vd-materiel-title">Materiel requis</h2>
+            </div>
+            <p class="vd-materiel-subtitle">
+              Voici les équipements recommandés pour suivre la formation et
+              pratiquer dans de bonnes conditions :
+            </p>
+            <ul class="vd-materiel-list">
+              {materielRequis.map((item: string) => (
+                <li>
+                  <span class="vd-check">✓</span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- 4. Bienfaits & Profils -->
+  <SoinFeatures benefits={benefits} targetAudience={targetAudience} />
+
+  <!-- 5. FAQ -->
+  <SoinFaq faq={faq} />
+
+  <!-- 6. Navigation entre programmes en ligne -->
+  <SoinNavBottom
+    prevItem={prevRef}
+    nextItem={nextRef}
+    basePath="/formations-distance"
+    labelPrev="Programme précédent"
+    labelNext="Programme suivant"
+  />
+
+  <!-- 7. Callout Final (Paiement direct ou Contact) -->
+  <CalloutSection
+    variant="boat"
+    tagline="Accès Immédiat"
+    title="Prêt à apprendre à votre rythme ?"
+    description="Accédez instantanément aux modules vidéo, aux supports de cours PDF et au suivi personnalisé dès la validation."
+    buttonText={checkoutUrl ? "Rejoindre le programme" : "Me contacter"}
+    buttonHref={checkoutUrl || "/contact"}
+  />
+</MainLayout>
+
+<style>
+  /* CSS pour le bloc Matériel Requis */
+  .vd-materiel-section {
+    padding: 2.5rem 1.5rem;
+  }
+
+  .vd-container {
+    max-width: 1120px;
+    margin: 0 auto;
+  }
+
+  .vd-glass-card {
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.95);
+    border-radius: 24px;
+    box-shadow: 0 10px 30px rgba(136, 36, 84, 0.04);
+    padding: 2.5rem;
+  }
+
+  .vd-materiel-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .vd-materiel-icon {
+    font-size: 1.5rem;
+  }
+
+  .vd-materiel-title {
+    font-family: "Nicholas", serif;
+    font-size: 1.75rem;
+    color: #4f2613;
+    margin: 0;
+    font-weight: 300;
+  }
+
+  .vd-materiel-subtitle {
+    font-size: 0.95rem;
+    color: #666666;
+    margin-bottom: 1.5rem;
+    font-weight: 300;
+  }
+
+  .vd-materiel-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+  }
+
+  .vd-materiel-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.95rem;
+    color: #444444;
+    background: rgba(136, 36, 84, 0.03);
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+  }
+
+  .vd-check {
+    color: #882454;
+    font-weight: bold;
+  }
+</style>

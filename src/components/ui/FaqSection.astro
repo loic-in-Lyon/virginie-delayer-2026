@@ -1,0 +1,209 @@
+---
+interface FaqItem {
+  question: string;
+  answer: string;
+}
+
+interface Props {
+  title?: string;
+  subtitle?: string;
+  faq?: FaqItem[];
+  class?: string;
+}
+
+const {
+  title = "Foire Aux Questions",
+  subtitle = "Des réponses simples à vos interrogations",
+  faq = [],
+  class: className = "",
+} = Astro.props;
+
+if (!faq || faq.length === 0) return null;
+---
+
+<section class={`vd-faq-section ${className}`}>
+  <div class="vd-faq-container">
+    <div class="vd-faq-header">
+      <h2 class="vd-faq-title">{title}</h2>
+      {subtitle && <p class="vd-faq-subtitle">{subtitle}</p>}
+    </div>
+
+    <div class="vd-faq-grid">
+      {faq.map((item, index) => (
+        <details class="vd-faq-note" style={`--note-rotate: ${(index % 3 === 0 ? -1.2 : index % 3 === 1 ? 1.5 : -0.8)}deg;`}>
+          <summary class="vd-faq-summary">
+            <!-- Icone Trombone / Paperclip -->
+            <div class="vd-paperclip" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="34" viewBox="0 0 24 24" fill="none" stroke="#7a6b63" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57a4 4 0 1 1 5.66 5.66l-8.59 8.58a2 2 0 0 1-2.83-2.83l8.49-8.48"></path>
+              </svg>
+            </div>
+
+            <h3 class="vd-faq-question">{item.question}</h3>
+
+            <div class="vd-faq-action-label">
+              <span class="label-open">click to see answer</span>
+              <span class="label-close">click to close</span>
+            </div>
+          </summary>
+
+          <div class="vd-faq-answer">
+            <p>{item.answer}</p>
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .vd-faq-section {
+    width: 100% !important;
+    padding: 5rem 1.5rem !important;
+    background-color: #faf5f7 !important;
+    box-sizing: border-box !important;
+  }
+
+  .vd-faq-container {
+    max-width: 960px !important;
+    margin: 0 auto !important;
+  }
+
+  .vd-faq-header {
+    text-align: center !important;
+    margin-bottom: 3.5rem !important;
+  }
+
+  .vd-faq-title {
+    font-family: "Nicholas", "Beautiful", serif !important;
+    font-size: 2.75rem !important;
+    color: #4f2613 !important;
+    font-weight: 300 !important;
+    margin: 0 0 0.5rem 0 !important;
+  }
+
+  .vd-faq-subtitle {
+    font-family: "Priestacy", "AlexBrushRegular", cursive !important;
+    font-size: 1.6rem !important;
+    color: #882454 !important;
+    margin: 0 !important;
+  }
+
+  /* Grille des cartes post-it / notes papier */
+  .vd-faq-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+    gap: 2rem !important;
+    align-items: start !important;
+  }
+
+  /* Note Papier */
+  .vd-faq-note {
+    position: relative !important;
+    background-color: #f7f5ed !important; /* Teinte crème papier d'art */
+    border-radius: 12px !important;
+    padding: 2rem 1.75rem 1.25rem 1.75rem !important;
+    box-shadow: 0 8px 25px rgba(60, 40, 30, 0.07), 0 2px 6px rgba(0, 0, 0, 0.03) !important;
+    transform: rotate(var(--note-rotate, 0deg)) !important;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    cursor: pointer !important;
+    list-style: none !important;
+    border: 1px solid rgba(230, 225, 215, 0.8) !important;
+  }
+
+  .vd-faq-note:hover {
+    transform: translateY(-4px) rotate(0deg) scale(1.01) !important;
+    box-shadow: 0 14px 35px rgba(60, 40, 30, 0.12) !important;
+    z-index: 5 !important;
+  }
+
+  .vd-faq-summary {
+    list-style: none !important;
+    outline: none !important;
+    display: flex !important;
+    flex-direction: column !important;
+    min-height: 140px !important;
+    justify-content: space-between !important;
+  }
+
+  .vd-faq-summary::-webkit-details-marker {
+    display: none !important;
+  }
+
+  /* Trombone en haut à droite */
+  .vd-paperclip {
+    position: absolute !important;
+    top: -12px !important;
+    right: 20px !important;
+    z-index: 2 !important;
+    transform: rotate(12deg) !important;
+    filter: drop-shadow(1px 2px 2px rgba(0,0,0,0.15)) !important;
+  }
+
+  /* Question en typo Priestacy/Beautiful */
+  .vd-faq-question {
+    font-family: "Nicholas", "Beautiful", serif !important;
+    font-size: 1.25rem !important;
+    color: #4f2613 !important;
+    font-weight: 400 !important;
+    line-height: 1.35 !important;
+    margin: 0.5rem 0 1.5rem 0 !important;
+  }
+
+  /* Indication clic manuscrite */
+  .vd-faq-action-label {
+    font-family: "Priestacy", "AlexBrushRegular", cursive !important;
+    font-size: 1.15rem !important;
+    color: #77685d !important;
+    text-decoration: underline !important;
+    text-decoration-style: dotted !important;
+    text-underline-offset: 3px !important;
+    margin-top: auto !important;
+  }
+
+  .vd-faq-note[open] .label-open {
+    display: none !important;
+  }
+
+  .label-close {
+    display: none !important;
+  }
+
+  .vd-faq-note[open] .label-close {
+    display: inline !important;
+  }
+
+  /* Réponse */
+  .vd-faq-answer {
+    margin-top: 1.25rem !important;
+    padding-top: 1rem !important;
+    border-top: 1px dashed rgba(180, 165, 150, 0.4) !important;
+    animation: fadeIn 0.35s ease-out !important;
+  }
+
+  .vd-faq-answer p {
+    font-family: inherit !important;
+    font-size: 0.875rem !important;
+    color: #4a4039 !important;
+    line-height: 1.65 !important;
+    font-weight: 300 !important;
+    margin: 0 !important;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .vd-faq-grid {
+      grid-template-columns: 1fr !important;
+    }
+  }
+</style>

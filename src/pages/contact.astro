@@ -1,0 +1,775 @@
+---
+export const prerender = false;
+
+import MainLayout from "../layouts/MainLayout.astro";
+import PageHero from "../components/ui/PageHero.astro";
+import contactHeroImg from "../assets/Hero_soin.webp";
+import { Resend } from "resend";
+import { getCollection } from "astro:content";
+
+// Récupération dynamique des collections depuis src/content/
+const soinsEntries = await getCollection("soins");
+const formationsEntries = await getCollection("formations");
+const formationsDistanceEntries = await getCollection("formations-distance");
+
+const soinsList = soinsEntries.map((entry) => entry.data.title || entry.id);
+const formationsList = formationsEntries.map(
+  (entry) => entry.data.title || entry.id,
+);
+const formationsDistanceList = formationsDistanceEntries.map(
+  (entry) => entry.data.title || entry.id,
+);
+
+let successMessage = "";
+let errorMessage = "";
+
+if (Astro.request.method === "POST") {
+  try {
+    const data = await Astro.request.formData();
+    const category = data.get("category")?.toString() || "";
+    const specificChoice =
+      data.get("specificChoice")?.toString() || "Non spécifié";
+    const fullname = data.get("fullname")?.toString() || "";
+    const email = data.get("email")?.toString() || "";
+    const phone = data.get("phone")?.toString() || "Non renseigné";
+    const message = data.get("message")?.toString() || "";
+
+    const motifComplet =
+      specificChoice !== "Non spécifié"
+        ? `${category} : ${specificChoice}`
+        : category;
+
+    const resend = new Resend(import.meta.env.RESEND_API_KEY);
+
+    const { error } = await resend.emails.send({
+      from: "onboarding@resend.dev", // Obligatoire en mode test gratuit
+      to: ["poosingloic@gmail.com"], // Ton adresse (seule autorisée actuellement par Resend)
+      replyTo: email,
+      subject: `[Contact Site] ${motifComplet} - De ${fullname}`,
+      html: `
+        <h2>Nouveau message reçu depuis le site</h2>
+        <p><strong>Destinataire initial :</strong> Virginie Delayer (virginiedelayerbienetre@gmail.com)</p>
+        <p><strong>Sujet principal :</strong> ${category}</p>
+        <p><strong>Précision :</strong> ${specificChoice}</p>
+        <hr />
+        <p><strong>Nom :</strong> ${fullname}</p>
+        <p><strong>Email :</strong> ${email}</p>
+        <p><strong>Téléphone :</strong> ${phone}</p>
+        <hr />
+        <h3>Message :</h3>
+        <p style="white-space: pre-wrap;">${message}</p>
+      `,
+    });
+
+    if (error) {
+      errorMessage = "Une erreur est survenue lors de l'envoi du message.";
+    } else {
+      successMessage =
+        "Votre message a bien été envoyé ! Virginie vous répondra sous 24h.";
+    }
+  } catch (err) {
+    console.error("ERREUR CAPTUREE PAR RESEND/SERVEUR:", err); // <-- AJOUTE CETTE LIGNE
+    errorMessage =
+      "Une erreur technique est survenue. Veuillez réessayer. Détail : " +
+      (err instanceof Error ? err.message : String(err));
+  }
+}
+
+const titleSEO =
+  "Contact & Réservation | Virginie Delayer - Massothérapie Lyon & Oullins";
+const descriptionSEO =
+  "Une question sur un soin, un massage à domicile ou une formation ? Contactez Virginie Delayer par formulaire, téléphone ou email.";
+
+function removeAccents(str: string) {
+  if (!str) return "";
+  return str
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/œ/g, "oe")
+    .replace(/Œ/g, "OE");
+}
+
+const cleanSectionTitle = removeAccents("Je suis à votre écoute");
+
+const schemaContact = {
+  "@context": "https://schema.org",
+  "@type": "HealthAndBeautyBusiness",
+  name: "Virginie Delayer - Massothérapie & Soins Énergétiques",
+  description:
+    "Massages bien-être et soins énergétiques à domicile et formations sur Oullins, Lyon et métropole.",
+  url: "https://virginie-delayer.com/contact",
+  telephone: "+33660693241",
+  email: "virginiedelayerbienetre@gmail.com",
+  priceRange: "€€",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Oullins-Pierre-Bénite",
+    addressRegion: "Auvergne-Rhône-Alpes",
+    postalCode: "69600",
+    addressCountry: "FR",
+  },
+  sameAs: ["https://www.facebook.com/virginiedelayer/"],
+  areaServed: [
+    { "@type": "AdministrativeArea", name: "Oullins-Pierre-Bénite" },
+    { "@type": "City", name: "Lyon" },
+  ],
+  openingHoursSpecification: [
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+      ],
+      opens: "09:00",
+      closes: "19:00",
+    },
+  ],
+  contactPoint: {
+    "@type": "ContactPoint",
+    telephone: "+33660693241",
+    contactType: "customer service",
+    availableLanguage: ["French"],
+  },
+};
+---
+
+<MainLayout title={titleSEO} description={descriptionSEO} bodyId="page-contact">
+  <script type="application/ld+json" set:html={JSON.stringify(schemaContact)} />
+
+  <PageHero
+    category="A votre ecoute"
+    title="Contactez-moi"
+    subtitle="Une question, un besoin de renseignement, un rendez-vous ou des détails sur les formations ? Je me ferai un plaisir de vous répondre."
+    bgImage={contactHeroImg.src}
+  />
+
+  <section class="vd-contact-section">
+    <div class="vd-container">
+      {
+        successMessage && (
+          <div class="vd-alert vd-alert-success">{successMessage}</div>
+        )
+      }
+      {
+        errorMessage && (
+          <div class="vd-alert vd-alert-error">{errorMessage}</div>
+        )
+      }
+
+      <div class="vd-contact-grid">
+        <!-- COLONNE GAUCHE : INFOS -->
+        <div class="vd-contact-info-col">
+          <div class="vd-info-header">
+            <span class="vd-info-tagline">Echangeons ensemble</span>
+            <h2 class="vd-info-title">{cleanSectionTitle}</h2>
+            <p class="vd-info-text">
+              Chaque personne est unique. Que vous souhaitiez réserver un
+              massage à domicile, un soin énergétique ou en savoir plus sur les
+              cursus de formation, prenons le temps d'échanger.
+            </p>
+          </div>
+
+          <div class="vd-glass-card vd-info-card">
+            <div class="vd-info-item">
+              <div class="vd-info-icon" aria-hidden="true">📍</div>
+              <div>
+                <span class="vd-info-label">Secteur d'intervention</span>
+                <p class="vd-info-value">
+                  Oullins-Pierre-Bénite, Lyon & métropole
+                </p>
+              </div>
+            </div>
+
+            <div class="vd-info-item">
+              <div class="vd-info-icon" aria-hidden="true">📞</div>
+              <div>
+                <span class="vd-info-label">Téléphone</span>
+                <a href="tel:+33660693241" class="vd-info-value vd-link"
+                  >06 60 69 32 41</a
+                >
+                <span class="vd-info-sub">Du lundi au samedi (9h - 19h)</span>
+              </div>
+            </div>
+
+            <div class="vd-info-item">
+              <div class="vd-info-icon" aria-hidden="true">✉️</div>
+              <div>
+                <span class="vd-info-label">Adresse Email</span>
+                <a
+                  href="mailto:virginiedelayerbienetre@gmail.com"
+                  class="vd-info-value vd-link"
+                >
+                  virginiedelayerbienetre@gmail.com
+                </a>
+              </div>
+            </div>
+
+            <div class="vd-info-item">
+              <div class="vd-info-icon" aria-hidden="true">🌐</div>
+              <div>
+                <span class="vd-info-label">Réseaux Sociaux</span>
+                <a
+                  href="https://www.facebook.com/virginiedelayer/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="vd-info-value vd-link"
+                >
+                  Page Facebook Officielle
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="vd-glass-card vd-reassurance-card">
+            <span class="vd-reassurance-title">✨ Réponse sous 24h</span>
+            <p class="vd-reassurance-desc">
+              Je prends le temps de lire attentivement chaque demande afin de
+              vous apporter une réponse personnalisée et adaptée à vos attentes.
+            </p>
+          </div>
+        </div>
+
+        <!-- COLONNE DROITE : FORMULAIRE INTERACTIF -->
+        <div class="vd-contact-form-col">
+          <div class="vd-glass-card vd-form-card">
+            <div class="vd-form-header">
+              <span class="vd-form-tagline">Formulaire interactif</span>
+              <h3 class="vd-form-title">Envoyer un message</h3>
+            </div>
+
+            <form class="vd-contact-form" method="POST">
+              <!-- CHAMP 1 : OBJET PRINCIPAL -->
+              <div class="vd-field-group">
+                <label for="category" class="vd-label"
+                  >De quoi s'agit-il ? *</label
+                >
+                <div class="vd-select-wrapper">
+                  <select
+                    id="category"
+                    name="category"
+                    required
+                    class="vd-input vd-select"
+                  >
+                    <option value="" disabled selected
+                      >Choisissez une option...</option
+                    >
+                    <option value="Soin & Massage"
+                      >Un soin / massage bien-être</option
+                    >
+                    <option value="Formation en présentiel"
+                      >Une formation en présentiel</option
+                    >
+                    <option value="Formation en ligne"
+                      >Une formation en ligne</option
+                    >
+                    <option value="Autre demande"
+                      >Autre demande / Échange général</option
+                    >
+                  </select>
+                </div>
+              </div>
+
+              <!-- CHAMP 2 : PRÉCISION DYNAMIQUE (STRICTEMENT CACHÉ PAR DÉFAUT) -->
+              <div
+                class="vd-field-group vd-conditional-field"
+                id="dynamic-field-wrapper"
+                style="display: none !important;"
+              >
+                <label for="specificChoice" id="dynamic-label" class="vd-label"
+                  >Précision *</label
+                >
+                <div class="vd-select-wrapper">
+                  <select
+                    id="specificChoice"
+                    name="specificChoice"
+                    class="vd-input vd-select"
+                  >
+                    <!-- Injecté dynamiquement par JS -->
+                  </select>
+                </div>
+              </div>
+
+              <!-- COORDONNÉES -->
+              <div class="vd-form-row">
+                <div class="vd-field-group">
+                  <label for="fullname" class="vd-label">Prénom & Nom *</label>
+                  <input
+                    type="text"
+                    id="fullname"
+                    name="fullname"
+                    placeholder="Ex: Virginie Dupont"
+                    required
+                    autocomplete="name"
+                    class="vd-input"
+                  />
+                </div>
+
+                <div class="vd-field-group">
+                  <label for="email" class="vd-label">Votre Email *</label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="nom@exemple.com"
+                    required
+                    autocomplete="email"
+                    class="vd-input"
+                  />
+                </div>
+              </div>
+
+              <div class="vd-field-group">
+                <label for="phone" class="vd-label">
+                  Téléphone <span class="vd-optional"
+                    >(Optionnel - Pour vous rappeler)</span
+                  >
+                </label>
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  placeholder="06 60 69 32 41"
+                  autocomplete="tel"
+                  class="vd-input"
+                />
+              </div>
+
+              <div class="vd-field-group">
+                <label for="message" class="vd-label"
+                  >Votre message ou vos disponibilités *</label
+                >
+                <textarea
+                  id="message"
+                  name="message"
+                  rows="5"
+                  placeholder="Précisez votre demande, vos attentes..."
+                  required
+                  class="vd-input vd-textarea"></textarea>
+              </div>
+
+              <div class="vd-form-action">
+                <button type="submit" class="vd-btn-submit">
+                  <span>Envoyer ma demande</span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                    ><line x1="22" y1="2" x2="11" y2="13"></line><polygon
+                      points="22 2 15 22 11 13 2 9 22 2"></polygon></svg
+                  >
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRANSMISSION DES DONNÉES DYNAMIQUES CÔTÉ CLIENT -->
+  <script
+    define:vars={{ soinsList, formationsList, formationsDistanceList }}
+    is:inline
+  >
+    document.addEventListener("DOMContentLoaded", () => {
+      const categorySelect = document.getElementById("category");
+      const dynamicWrapper = document.getElementById("dynamic-field-wrapper");
+      const dynamicLabel = document.getElementById("dynamic-label");
+      const specificChoiceSelect = document.getElementById("specificChoice");
+
+      // Forcer le masquage strict au chargement initial / rafraîchissement
+      dynamicWrapper.style.setProperty("display", "none", "important");
+      specificChoiceSelect.removeAttribute("required");
+
+      categorySelect.addEventListener("change", (e) => {
+        const val = e.target.value;
+
+        // Vider le champ dynamique
+        specificChoiceSelect.innerHTML = "";
+        specificChoiceSelect.removeAttribute("required");
+
+        let items = [];
+        let labelText = "";
+
+        if (val === "Soin & Massage") {
+          items = soinsList;
+          labelText = "Quel soin vous intéresse ? *";
+        } else if (val === "Formation en présentiel") {
+          items = formationsList;
+          labelText = "Quelle formation en présentiel ? *";
+        } else if (val === "Formation en ligne") {
+          items = formationsDistanceList;
+          labelText = "Quelle formation en ligne ? *";
+        }
+
+        if (items.length > 0) {
+          // Option par défaut
+          const defaultOpt = document.createElement("option");
+          defaultOpt.value = "";
+          defaultOpt.textContent = "Sélectionnez une option...";
+          defaultOpt.disabled = true;
+          defaultOpt.selected = true;
+          specificChoiceSelect.appendChild(defaultOpt);
+
+          // Injection des éléments de la collection Astro
+          items.forEach((name) => {
+            const opt = document.createElement("option");
+            opt.value = name;
+            opt.textContent = name;
+            specificChoiceSelect.appendChild(opt);
+          });
+
+          // Option j'hésite / autre
+          const otherOpt = document.createElement("option");
+          otherOpt.value = "Autre / J'hésite";
+          otherOpt.textContent = "Je ne sais pas encore / J'hésite";
+          specificChoiceSelect.appendChild(otherOpt);
+
+          dynamicLabel.textContent = labelText;
+          specificChoiceSelect.setAttribute("required", "true");
+          dynamicWrapper.style.setProperty("display", "block", "important");
+        } else {
+          // Masquer proprement si "Autre demande" ou reset
+          dynamicWrapper.style.setProperty("display", "none", "important");
+          specificChoiceSelect.value = "";
+        }
+      });
+    });
+  </script>
+</MainLayout>
+
+<style>
+  .vd-contact-section {
+    padding: 4.5rem 0 6rem 0 !important;
+    background-color: #faf5f7 !important;
+    box-sizing: border-box !important;
+  }
+
+  .vd-container {
+    max-width: 1120px !important;
+    margin: 0 auto !important;
+    padding: 0 1.5rem !important;
+  }
+
+  .vd-alert {
+    padding: 1rem 1.5rem !important;
+    border-radius: 12px !important;
+    margin-bottom: 2rem !important;
+    font-size: 0.95rem !important;
+    font-weight: 500 !important;
+  }
+  .vd-alert-success {
+    background: rgba(40, 167, 69, 0.1) !important;
+    color: #1e7e34 !important;
+    border: 1px solid rgba(40, 167, 69, 0.3) !important;
+  }
+  .vd-alert-error {
+    background: rgba(220, 53, 69, 0.1) !important;
+    color: #bd2130 !important;
+    border: 1px solid rgba(220, 53, 69, 0.3) !important;
+  }
+
+  .vd-contact-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1.25fr !important;
+    gap: 2.5rem !important;
+    align-items: start !important;
+  }
+
+  .vd-glass-card {
+    background: rgba(255, 255, 255, 0.92) !important;
+    backdrop-filter: blur(14px) !important;
+    -webkit-backdrop-filter: blur(14px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.95) !important;
+    border-radius: 24px !important;
+    box-shadow:
+      0 10px 30px rgba(136, 36, 84, 0.04),
+      inset 0 1px 1px rgba(255, 255, 255, 1) !important;
+  }
+
+  .vd-info-header {
+    margin-bottom: 1.75rem !important;
+  }
+
+  .vd-info-tagline {
+    font-family: "Priestacy", cursive !important;
+    font-size: 1.6rem !important;
+    color: #882454 !important;
+    display: block !important;
+    margin-bottom: 0.2rem !important;
+  }
+
+  .vd-info-title {
+    font-family: "Nicholas", serif !important;
+    font-size: 2.35rem !important;
+    color: #4f2613 !important;
+    margin: 0 0 0.85rem 0 !important;
+    font-weight: 300 !important;
+    line-height: 1.2 !important;
+  }
+
+  .vd-info-text {
+    font-size: 0.925rem !important;
+    color: #555555 !important;
+    line-height: 1.65 !important;
+    font-weight: 300 !important;
+    margin: 0 !important;
+  }
+
+  .vd-info-card {
+    padding: 2rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1.5rem !important;
+    margin-bottom: 1.5rem !important;
+  }
+
+  .vd-info-item {
+    display: flex !important;
+    align-items: flex-start !important;
+    gap: 1rem !important;
+  }
+
+  .vd-info-icon {
+    font-size: 1.35rem !important;
+    background: rgba(136, 36, 84, 0.06) !important;
+    width: 44px !important;
+    height: 44px !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
+  }
+
+  .vd-info-label {
+    display: block !important;
+    font-size: 0.75rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    color: #777777 !important;
+    margin-bottom: 0.15rem !important;
+    font-weight: 500 !important;
+  }
+
+  .vd-info-value {
+    font-family:
+      system-ui,
+      -apple-system,
+      sans-serif !important;
+    font-weight: 400 !important;
+    font-size: 1.05rem !important;
+    color: #4f2613 !important;
+    margin: 0 !important;
+    display: block !important;
+  }
+
+  .vd-link {
+    text-decoration: none !important;
+    transition: color 0.2s ease !important;
+  }
+
+  .vd-link:hover {
+    color: #882454 !important;
+  }
+
+  .vd-info-sub {
+    font-size: 0.8rem !important;
+    color: #888888 !important;
+    font-weight: 300 !important;
+    display: block !important;
+    margin-top: 0.2rem !important;
+  }
+
+  .vd-reassurance-card {
+    padding: 1.5rem 1.75rem !important;
+    background: rgba(253, 248, 250, 0.7) !important;
+    border: 1px dashed rgba(136, 36, 84, 0.2) !important;
+  }
+
+  .vd-reassurance-title {
+    font-size: 0.9rem !important;
+    font-weight: 600 !important;
+    color: #882454 !important;
+    display: block !important;
+    margin-bottom: 0.35rem !important;
+  }
+
+  .vd-reassurance-desc {
+    font-size: 0.85rem !important;
+    color: #666666 !important;
+    line-height: 1.55 !important;
+    font-weight: 300 !important;
+    margin: 0 !important;
+  }
+
+  .vd-form-card {
+    padding: 2.75rem 2.5rem !important;
+  }
+
+  .vd-form-header {
+    margin-bottom: 2rem !important;
+  }
+
+  .vd-form-tagline {
+    font-family: "Priestacy", cursive !important;
+    font-size: 1.5rem !important;
+    color: #882454 !important;
+    display: block !important;
+  }
+
+  .vd-form-title {
+    font-family: "Nicholas", serif !important;
+    font-size: 2rem !important;
+    color: #4f2613 !important;
+    margin: 0 !important;
+    font-weight: 300 !important;
+  }
+
+  .vd-contact-form {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1.35rem !important;
+  }
+
+  .vd-conditional-field {
+    animation: fadeIn 0.3s ease-in-out !important;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .vd-form-row {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 1.25rem !important;
+  }
+
+  .vd-field-group {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.45rem !important;
+    text-align: left !important;
+  }
+
+  .vd-label {
+    font-size: 0.825rem !important;
+    font-weight: 500 !important;
+    color: #4f2613 !important;
+    letter-spacing: 0.01em !important;
+  }
+
+  .vd-optional {
+    font-size: 0.775rem !important;
+    color: #888888 !important;
+    font-weight: 300 !important;
+  }
+
+  .vd-input {
+    width: 100% !important;
+    padding: 0.85rem 1.15rem !important;
+    font-family: inherit !important;
+    font-size: 0.9rem !important;
+    color: #333333 !important;
+    background: rgba(255, 255, 255, 0.85) !important;
+    border: 1px solid rgba(210, 190, 200, 0.6) !important;
+    border-radius: 14px !important;
+    outline: none !important;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.02) !important;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    box-sizing: border-box !important;
+  }
+
+  .vd-input::placeholder {
+    color: #aaa !important;
+    font-weight: 300 !important;
+  }
+
+  .vd-input:focus {
+    background: #ffffff !important;
+    border-color: #882454 !important;
+    box-shadow:
+      0 0 0 4px rgba(136, 36, 84, 0.08),
+      inset 0 1px 2px rgba(0, 0, 0, 0.01) !important;
+  }
+
+  .vd-select-wrapper {
+    position: relative !important;
+  }
+
+  .vd-select {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    cursor: pointer !important;
+  }
+
+  .vd-textarea {
+    resize: vertical !important;
+    min-height: 130px !important;
+  }
+
+  .vd-form-action {
+    margin-top: 0.5rem !important;
+  }
+
+  .vd-btn-submit {
+    width: 100% !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.65rem !important;
+    padding: 0.95rem 2rem !important;
+    font-family: inherit !important;
+    font-size: 0.95rem !important;
+    font-weight: 500 !important;
+    * {
+      color: #ffffff !important;
+    }
+    background: linear-gradient(135deg, #882454 0%, #692945 100%) !important;
+    border: none !important;
+    border-radius: 50px !important;
+    cursor: pointer !important;
+    box-shadow: 0 6px 20px rgba(136, 36, 84, 0.2) !important;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  }
+
+  .vd-btn-submit:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 10px 28px rgba(136, 36, 84, 0.3) !important;
+    background: linear-gradient(135deg, #9b2a61 0%, #7d3153 100%) !important;
+  }
+
+  @media (max-width: 900px) {
+    .vd-contact-grid {
+      grid-template-columns: 1fr !important;
+      gap: 3rem !important;
+    }
+
+    .vd-form-card {
+      padding: 2rem 1.5rem !important;
+    }
+
+    .vd-form-row {
+      grid-template-columns: 1fr !important;
+    }
+  }
+</style>

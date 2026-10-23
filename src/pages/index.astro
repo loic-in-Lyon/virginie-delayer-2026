@@ -1,17 +1,213 @@
 ---
+import { Image } from "astro:assets";
+import MainLayout from "../layouts/MainLayout.astro";
 
+import lotusImg from "../assets/lotus.webp";
+import bgIrisImg from "../assets/bg_1.webp";
+import virginieImg from "../assets/virginie.webp";
+import lfmbeImg from "../assets/lmfbe.png";
+import flowerFlower from "../assets/bg_1.webp";
+import bg3Img from "../assets/bg_3.webp";
+import CalloutSection from "../components/ui/CalloutSection.astro";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<MainLayout
+  title="Massages bien-être & soins énergétiques à Oullins près de Lyon | Virginie Delayer"
+>
+  <!-- Hero -->
+  <header class="paddingSection" id="hero">
+    <h1>Harmonisez Corps et esprit Révélez votre Vrai soi</h1>
+    <p class="mb-6vh">
+      Des massages à domicile et des formations en soin énergétique pour libérer
+      votre potentiel de bien-être
+    </p>
+    <a href="/contact" class="btn">Me contacter</a>
+  </header>
+
+  <!-- Quote -->
+  <section class="paddingSection quote bg-1">
+    <div class="container">
+      <Image src={lotusImg} alt="fleur de lotus" width={120} />
+      <span>
+        "Le bien-être s'acquiert par la purification du coeur, l'épanouissement
+        du corps, la sérénité de l'esprit et la satisfaction de la conscience."
+      </span>
+    </div>
+  </section>
+
+  <!-- Présentation -->
+  <section class="paddingSection" id="about">
+    <div class="container row">
+      <div class="about_content-2-left">
+        <h2>
+          Virginie Delayer
+          <br />
+          <span>Votre Guide Vers le Bien-etre</span>
+        </h2>
+        <p class="mb-6vh">
+          Je suis Virginie Delayer. Animée par ma passion et soutenue par une
+          expertise solide, je poursuis la mission d'enrichir votre vie en vous
+          aidant à retrouver équilibre, détente et joie.
+        </p>
+        <a href="/a-propos-massotherapeute-virginiedelayer" class="btn"
+          >Me découvrir</a
+        >
+      </div>
+      <div class="about_image">
+        <div class="about_image-1">
+          <Image
+            class="about_image-large"
+            src={bgIrisImg}
+            alt="fleur iris"
+            width={500}
+            height={600}
+          />
+        </div>
+        <div class="about_image-2 hide-tablet">
+          <Image
+            class="about_image-absolute rounded-img imgShadow"
+            src={virginieImg}
+            alt="virginie delayer"
+            width={300}
+            height={400}
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="paddingSection" id="services">
+    <div class="container">
+      <h2>
+        <span>Des soins et des transmissions pour votre bien-etre</span>
+      </h2>
+      <p class="mb-6vh">
+        Recevoir ou transmettre, selon votre besoin du moment.
+      </p>
+      <div class="card-wrapper">
+        <div class="card">
+          <h3><span>Massages</span> L'accès au Bien-être Complet</h3>
+          <p>
+            Chaque session est une invitation à retrouver la sérénité et à
+            revitaliser votre esprit et votre corps. Trouvez le massage
+            idéalement adapté à vos besoins.
+          </p>
+          <a href="/massages-soins" class="link">Mes soins</a>
+        </div>
+        <div class="card">
+          <h3><span>Formations</span> Maîtrisez l'Art du Bien-être</h3>
+          <p>
+            Développez vos compétences avec mes formations professionnelles,
+            conçues pour stimuler votre croissance personnelle et
+            professionnelle.
+          </p>
+          <a href="/formations-massotherapie" class="link">Mes formations</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SeparatorSection -->
+  <section class="paddingSection separatorSection bg-2">
+    <div class="container">
+      <Image src={lotusImg} alt="fleur de lotus" width={120} />
+    </div>
+  </section>
+
+  <!-- École LFMBE -->
+  <section class="paddingSection reverse" id="about-lfmbe">
+    <div class="container row">
+      <div class="about_content-2-left reverse">
+        <h2>
+          Transmission & formations professionnelles
+          <br />
+          <span>– LFMBE –</span>
+        </h2>
+        <p class="mb-6vh">
+          En parallèle de mon activité de praticienne, je transmets mon savoir
+          au sein d’écoles de formation en massage bien-être. J’accompagne les
+          futurs praticiens dans l’apprentissage de techniques professionnelles.
+        </p>
+      </div>
+      <div class="about_image">
+        <div class="about_image-1">
+          <Image
+            class="about_image-large reverse"
+            src={lfmbeImg}
+            alt="background massage vert"
+            width={500}
+            height={400}
+          />
+        </div>
+      </div>
+    </div>
+    <div class="container reverse">
+      <p class="mb-6vh">
+        J’interviens en tant que formatrice au sein de l’école LFMBE, une école
+        spécialisée dans les formations professionnelles en massage bien-être
+        depuis 2005.
+      </p>
+      <a
+        href="https://lfmbe.fr/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn">Découvrir l'école LFMBE</a
+      >
+    </div>
+  </section>
+  <!-- Testimonial -->
+  <section class="paddingSection bg-7" id="testimonial">
+    <div class="container row">
+      <div class="about_image right">
+        <div class="about_image-1">
+          <Image
+            class="about_image-large rounded-img"
+            src={bg3Img}
+            alt="paysage serene"
+            width={400}
+            height={500}
+            style="width: 81%"
+          />
+        </div>
+        <div class="about_image-2 hide-tablet">
+          <Image
+            class="about_image-absolute rounded-img imgShadow"
+            src={bgIrisImg}
+            alt="fleur iris"
+            width={350}
+            height={450}
+          />
+        </div>
+      </div>
+
+      <div class="about_content-2-left right">
+        <h2>
+          Témoignage
+          <br />
+          <span>Les echos de ma Communaute</span>
+        </h2>
+        <p class="mb-6vh">
+          L'impact de mes séances se mesure dans les mots de ceux qui ont été
+          touchés par ces expériences. Voici quelques témoignages de clients et
+          d'élèves qui reflètent l'essence de mon travail.
+        </p>
+        <p class="temoignage">
+          “J'ai laissé tomber mon armure... ou plutôt, c'est Virginie qui me l'a
+          ôtée. Ce carcan qui m'étouffait depuis des temps immémoriaux”
+          <span>Sophie B.</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section CTA (Version Bateau Origami) -->
+  <CalloutSection
+    variant="boat"
+    tagline="Me contacter"
+    title="Je suis à votre ecoute"
+    description="Souhaitez-vous discuter de vos besoins en bien-être ou en savoir plus sur les services et programmes d'apprentissage ? Contactez-moi directement."
+    buttonText="Me contacter"
+    buttonHref="/contact"
+  />
+</MainLayout>

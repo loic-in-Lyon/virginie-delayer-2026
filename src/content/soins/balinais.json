@@ -1,0 +1,33 @@
+{
+  "title": "Balinais",
+  "subtitle": "Soin harmonisant complet entre tonicité et relaxation",
+  "metaTitle": "Soin Massage Balinais - Harmonisation & Vitalité",
+  "metaDescription": "Découvrez le soin massage balinais. Une alliance parfaite de pétrissages toniques et d'effleurements doux pour rééquilibrer les énergies du corps.",
+  "duree": "1h",
+  "prix": "70",
+  "resume": "Relaxation profonde et rééquilibrage global du corps",
+  "content": "Inspiré de la médecine traditionnelle indonésienne, le soin massage balinais associe harmonieusement des manœuvres toniques et des effleurements doux. Il stimule la circulation sanguine et énergétique tout en apportant une relaxation profonde des muscles pour un corps revitalisé.",
+  "targetAudience": [
+    "Personnes ayant des courbatures ou tensions musculaires",
+    "Besoin de retrouver vitalité et énergie au quotidien",
+    "Recherche d'un massage équilibré entre douceur et fermeté"
+  ],
+  "benefits": [
+    "Relâchement musculaire profond et souplesse corporelle",
+    "Stimulation de la circulation sanguine et lymphatique",
+    "Rééquilibrage global des énergies et sensation de vitalité"
+  ],
+  "faq": [
+    {
+      "question": "Le massage balinais est-il très appuyé ?",
+      "answer": "C'est un massage équilibré qui alterne des manœuvres toniques (pétrissages, pressions) et des mouvements doux et enveloppants. La pression est ajustée selon votre sensibilité."
+    },
+    {
+      "question": "Quels sont les bienfaits principaux du soin balinais ?",
+      "answer": "Il permet d'assouplir les muscles, de stimuler la circulation sanguine et d'apporter une profonde sensation d'harmonisation et de vitalité."
+    }
+  ],
+  "featured": false,
+  "isNew": true,
+  "draft": false
+}

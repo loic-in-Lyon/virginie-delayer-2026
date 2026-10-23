@@ -1,0 +1,123 @@
+---
+import { getCollection } from "astro:content";
+import MainLayout from "../layouts/MainLayout.astro";
+
+// Importation des composants UI
+import PageHero from "../components/ui/PageHero.astro";
+import ServiceIntro from "../components/ui/ServiceIntro.astro";
+import StepsSection from "../components/ui/StepsSection.astro";
+import ServicesSection from "../components/ui/ServicesSection.astro";
+import CalloutSection from "../components/ui/CalloutSection.astro";
+
+// Assets d'images de fond
+import heroFlowerImg from "../assets/heroFormations.webp";
+import bgFlowers from "../assets/deroulement.webp";
+
+// 1. Récupération dynamique de la collection Astro "soins" (non masqués)
+const soins = await getCollection("soins", ({ data }) => !data.draft);
+
+// 2. Contenu des 4 étapes du déroulement d'une séance
+const stepsSeance = [
+  {
+    number: "1",
+    title: "Préparation Personnalisée",
+    description:
+      "Avant de commencer, nous discutons de vos besoins spécifiques pour personnaliser la séance.",
+  },
+  {
+    number: "2",
+    title: "Installation Confortable",
+    description:
+      "Je prépare l'espace avec tout le nécessaire pour une expérience optimale – table de massage, huiles, musique douce.",
+  },
+  {
+    number: "3",
+    title: "Déroulement",
+    description:
+      "Selon le massage choisi, je pratique des techniques spécifiques – massages, soins énergétiques, sonothérapie – qui visent à équilibrer votre corps et votre esprit.",
+  },
+  {
+    number: "4",
+    title: "Détente et Récupération",
+    description:
+      "Après le modelage, je vous laisse un moment pour vous reposer et intégrer pleinement les bienfaits de la séance.",
+  },
+];
+
+// 3. SEO Local & Données Structurées JSON-LD (Oullins / Lyon)
+const schemaServices = {
+  "@context": "https://schema.org",
+  "@type": "HealthAndBeautyBusiness",
+  name: "Virginie Delayer - Massothérapie & Soins Énergétiques",
+  description:
+    "Massages bien-être et soins énergétiques à domicile à Oullins, Lyon et leurs alentours.",
+  url: "https://virginie-delayer.com/soins",
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Catalogue des Massages & Soins",
+    itemListElement: soins.map((soin) => ({
+      "@type": "Offer",
+      itemOffered: {
+        "@type": "Service",
+        name: soin.data.title,
+        description: soin.data.resume,
+      },
+      price: soin.data.prix,
+      priceCurrency: "EUR",
+    })),
+  },
+};
+---
+
+<MainLayout
+  title="Massages bien-être & Soins Énergétiques à Domicile Oullins & Lyon | Virginie Delayer"
+  description="Découvrez mes massages bien-être et soins énergétiques à domicile (Lahochi, Lomi Lomi, Bols Tibétains) sur Oullins, Lyon et leurs alentours."
+  bodyId="soins"
+>
+  <!-- Schema.org JSON-LD pour le SEO -->
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify(schemaServices)}
+  />
+
+  <!-- 1. HERO PAGE (Avec Image de fond et dégagement Navbar) -->
+  <PageHero
+    title="Un Voyage Sensoriel et energetique"
+    subtitle="Autorisez-vous à vous libérer des émotions négatives, de vos blocages physiques et émotionnels pour être bien et être vous."
+    ctaText="Me contacter"
+    ctaHref="/contact"
+    bgImage={heroFlowerImg.src}
+  />
+
+  <!-- 2. INTRO SERVICE (Typo Nicholas + Surtitre Manuscrit) -->
+  <ServiceIntro
+    tagline="Massages bien-être à Domicile"
+    title="Une experience Personnalisee sur Lyon et alentours"
+    description="Chaque séance de bien-être est une expérience unique, adaptée à vos besoins spécifiques. En tant que massothérapeute expert, je me déplace à votre domicile avec tout le matériel nécessaire pour créer un espace de relaxation et de guérison."
+  />
+
+  <!-- 3. DÉROULEMENT D'UNE SÉANCE (Cartes Glassmorphism) -->
+  <StepsSection
+    title="Deroulement d’une seance"
+    subtitle="Un accompagnement progressif pour vous amener vers la détente et le lâcher-prise."
+    steps={stepsSeance}
+    bgImage={bgFlowers.src}
+  />
+
+  <!-- 4. CATALOGUE DES PRESTATIONS (Collection soins & Liens /soins/[id]) -->
+  <ServicesSection
+    title="Mes differents Massages"
+    subtitle="Votre bien-être est ma priorité. Chaque séance est une invitation à lâcher prise, à se reconnecter avec soi, et à vivre une transformation positive."
+    items={soins}
+  />
+
+  <!-- Callout Contact Final (Version Bateau) -->
+  <CalloutSection
+    variant="boat"
+    tagline="Me contacter"
+    title="Je suis a votre ecoute"
+    description="Souhaitez-vous discuter de vos besoins en bien-être ou réserver votre séance à domicile sur Lyon et ses environs ? Laissez-moi un message pour échanger ensemble."
+    buttonText="Me contacter"
+    buttonHref="/contact"
+  />
+</MainLayout>

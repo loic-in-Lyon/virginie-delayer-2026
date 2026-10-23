@@ -1,0 +1,259 @@
+---
+import Button from "../ui/Button.astro";
+import heroFlowerImg from "../../assets/Hero_soin.webp";
+
+interface Props {
+  title: string;
+  parentTitle?: string; // ex: "Massages & Soins"
+  parentHref?: string; // ex: "/massages-soins"
+  categorie?: string;
+  duree?: string;
+  prix?: string | number;
+  description?: string;
+  reservationLink?: string;
+}
+
+const {
+  title,
+  parentTitle = "Massages & Soins",
+  parentHref = "/massages-soins",
+  categorie = "Soin Énergétique & Bien-être",
+  duree,
+  prix,
+  description,
+  reservationLink = "/contact",
+} = Astro.props;
+
+// Fonction de nettoyage des accents pour la police Priestacy
+function removeAccents(str: string) {
+  if (!str) return "";
+  return str
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/œ/g, "oe")
+    .replace(/Œ/g, "OE");
+}
+
+const cleanTitle = removeAccents(title);
+const cleanCategorie = removeAccents(categorie);
+---
+
+<header class="vd-soin-hero">
+  <!-- Image de fond & Overlay -->
+  <div class="vd-soin-hero-bg">
+    <img src={heroFlowerImg.src} alt="" class="vd-soin-hero-img" />
+    <div class="vd-soin-hero-overlay"></div>
+  </div>
+
+  <!-- Fil d'Ariane Dynamique -->
+  <nav class="vd-hero-breadcrumb" aria-label="Fil d'Ariane">
+    <a href="/">Accueil</a>
+    <span class="sep">/</span>
+    <a href={parentHref}>{parentTitle}</a>
+    <span class="sep">/</span>
+    <span class="current">{title}</span>
+  </nav>
+
+  <!-- Contenu Principal -->
+  <div class="vd-soin-hero-container">
+    <span class="vd-soin-category">{cleanCategorie}</span>
+
+    <h1 class="vd-soin-title">{cleanTitle}</h1>
+
+    {
+      (duree || prix) && (
+        <div class="vd-soin-meta">
+          {duree && <span>Durée : {duree}</span>}
+          {duree && prix && <span class="vd-meta-separator">|</span>}
+          {prix && <span>Tarif : {prix} €</span>}
+        </div>
+      )
+    }
+
+    {description && <p class="vd-hero-description-text">{description}</p>}
+
+    <div class="vd-soin-cta">
+      <Button href={reservationLink} size="lg"> Réserver ce soin </Button>
+    </div>
+  </div>
+</header>
+
+<style>
+  /* ----------------------------------------------------
+     1. HERO HEADER
+  ---------------------------------------------------- */
+  .vd-soin-hero {
+    position: relative !important;
+    width: 100% !important;
+    min-height: 60vh !important;
+    padding-top: 7.5rem !important;
+    padding-bottom: 5rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: hidden !important;
+    background-color: #faf5f7 !important;
+    box-sizing: border-box !important;
+  }
+
+  .vd-soin-hero-bg {
+    position: absolute !important;
+    inset: 0 !important;
+    z-index: 1 !important;
+  }
+
+  .vd-soin-hero-img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center !important;
+  }
+
+  .vd-soin-hero-overlay {
+    position: absolute !important;
+    inset: 0 !important;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.7) 0%,
+      rgba(253, 248, 250, 0.85) 100%
+    ) !important;
+    backdrop-filter: blur(2px) !important;
+  }
+
+  /* ----------------------------------------------------
+     2. FIL D'ARIANE ULTRA-DISCRET (Overriding nav global)
+  ---------------------------------------------------- */
+  .vd-hero-breadcrumb {
+    position: absolute !important;
+    top: 6.5rem !important;
+    left: 4% !important;
+    z-index: 10 !important;
+
+    /* Dimensions compactes avec fit-content */
+    width: fit-content !important;
+    max-width: fit-content !important;
+    height: auto !important;
+
+    /* Élimination totale du fond, bordures et ombres du CSS global nav */
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+
+    /* Typographie & alignement */
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.4rem !important;
+    font-size: 0.825rem !important;
+    white-space: nowrap !important;
+  }
+
+  .vd-hero-breadcrumb a {
+    color: #777777 !important;
+    text-decoration: none !important;
+    transition: color 0.2s ease !important;
+    font-weight: 400 !important;
+  }
+
+  .vd-hero-breadcrumb a:hover {
+    color: #882454 !important;
+  }
+
+  .vd-hero-breadcrumb .sep {
+    color: #ccaab8 !important;
+    font-size: 0.75rem !important;
+  }
+
+  .vd-hero-breadcrumb .current {
+    color: #882454 !important;
+    font-weight: 500 !important;
+  }
+
+  /* ----------------------------------------------------
+     3. CONTENU TEXTUEL
+  ---------------------------------------------------- */
+  .vd-soin-hero-container {
+    position: relative !important;
+    z-index: 2 !important;
+    max-width: 820px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+    padding: 0 1.5rem !important;
+    text-align: center !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  .vd-soin-category {
+    font-family: "Nicholas", serif !important;
+    font-size: 1.6rem !important;
+    color: rgba(25, 1, 20, 0.65) !important;
+    margin-bottom: 0.25rem !important;
+  }
+
+  .vd-soin-title {
+    font-family: "Priestacy", "AlexBrushRegular", cursive !important;
+    font-size: 3.75rem !important;
+    color: #882454 !important; /* Couleur bordeaux chaleureuse */
+    margin: 0 0 0.75rem 0 !important;
+    font-weight: 400 !important;
+    line-height: 1.1 !important;
+  }
+
+  .vd-soin-meta {
+    font-size: 0.9rem !important;
+    color: #555555 !important;
+    margin-bottom: 1.25rem !important;
+    display: flex !important;
+    gap: 0.75rem !important;
+    align-items: center !important;
+  }
+
+  .vd-meta-separator {
+    color: #d1b5c4 !important;
+  }
+
+  .vd-hero-description-text {
+    font-size: 0.95rem !important;
+    color: #555555 !important;
+    line-height: 1.65 !important;
+    font-weight: 300 !important;
+    max-width: 620px !important;
+    margin: 0 0 2rem 0 !important;
+  }
+
+  /* ----------------------------------------------------
+     4. RESPONSIVE MOBILE
+  ---------------------------------------------------- */
+  @media (max-width: 768px) {
+    .vd-soin-hero {
+      padding-top: 5.5rem !important;
+      padding-bottom: 3.5rem !important;
+      min-height: auto !important;
+    }
+
+    .vd-hero-breadcrumb {
+      position: relative !important;
+      top: auto !important;
+      left: auto !important;
+      margin-bottom: 1.5rem !important;
+      justify-content: center !important;
+      white-space: normal !important;
+      flex-wrap: wrap !important;
+      text-align: center !important;
+      width: 100% !important;
+      max-width: 100% !important;
+    }
+
+    .vd-soin-title {
+      font-size: 2.8rem !important;
+    }
+  }
+</style>

@@ -1,0 +1,55 @@
+---
+interface Step {
+  number: string;
+  title: string;
+  description: string;
+}
+
+interface Props {
+  title: string;
+  subtitle?: string;
+  steps: Step[];
+  bgImage?: string;
+}
+
+const { title, subtitle, steps, bgImage } = Astro.props;
+---
+
+<section class="relative py-20 my-12 overflow-hidden">
+  {
+    bgImage && (
+      <div class="absolute inset-0 -z-10 opacity-30">
+        <img src={bgImage} alt="" class="w-full h-full object-cover" />
+      </div>
+    )
+  }
+
+  <div class="container mx-auto px-6 max-w-5xl">
+    <div class="text-center max-w-2xl mx-auto mb-14 space-y-2">
+      <h2 class="font-serif text-3xl sm:text-4xl text-[#4f2613]">{title}</h2>
+      {
+        subtitle && (
+          <p class="text-stone-600 text-xs sm:text-sm font-light">{subtitle}</p>
+        )
+      }
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {
+        steps.map((step) => (
+          <div class="p-8 rounded-2xl bg-white/70 backdrop-blur-md border border-white/80 shadow-sm space-y-3">
+            <span class="font-serif text-2xl text-[#882454]/60 font-light block">
+              {step.number}
+            </span>
+            <h3 class="font-serif text-lg text-[#4f2613] font-semibold">
+              {step.title}
+            </h3>
+            <p class="text-stone-600 text-xs sm:text-sm leading-relaxed">
+              {step.description}
+            </p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

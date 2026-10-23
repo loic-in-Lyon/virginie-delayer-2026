@@ -1,0 +1,139 @@
+---
+interface Props {
+  href?: string;
+  variant?: "primary" | "secondary" | "outline";
+  size?: "sm" | "md" | "lg";
+  type?: "button" | "submit";
+  class?: string;
+  style?: string;
+  [key: string]: any;
+}
+
+const {
+  href,
+  variant = "primary",
+  size = "md",
+  type = "button",
+  class: className = "",
+  style = "",
+  ...rest
+} = Astro.props;
+
+const Tag = href ? "a" : "button";
+---
+
+<Tag
+  href={href}
+  type={!href ? type : undefined}
+  class={`vd-btn vd-btn-${size} ${className}`}
+  style={style}
+  {...rest}
+>
+  <span class="vd-btn-shine"></span>
+  <span class="vd-btn-text">
+    <slot />
+  </span>
+</Tag>
+
+<style>
+  .vd-btn {
+    position: relative !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-decoration: none !important;
+    cursor: pointer !important;
+    border-radius: 50px !important;
+    overflow: hidden !important;
+    user-select: none !important;
+    box-sizing: border-box !important;
+    white-space: nowrap !important;
+    font-family: inherit !important;
+    font-weight: 500 !important;
+    color: #190114f2 !important; /* Couleur initiale proche de ton inspecteur */
+    transition: all 0.3s ease !important;
+
+    /* 1. GLASSMORPHISM TRANSLUCIDE */
+    backdrop-filter: blur(4px) !important;
+    -webkit-backdrop-filter: blur(4px) !important;
+
+    /* 2. GRADIENT RADIAL 3D (Lumière orientée en haut à gauche at 10% 10%) */
+    background: radial-gradient(
+      ellipse farthest-corner at 10% 10%,
+      rgba(255, 248, 252, 0.95) 0%,
+      rgba(245, 244, 252, 0.45) 50%,
+      rgba(255, 255, 255, 0) 100%
+    ) !important;
+
+    /* 3. BORDURE BLANCHE ET OMBRE PORTEUSE DOUCE (comme dans l'inspecteur) */
+    border: 1px solid rgba(255, 255, 255, 0.8) !important;
+    box-shadow: 0px 4px 30px rgba(158, 107, 138, 0.18) !important;
+  }
+
+  .vd-btn-text {
+    position: relative !important;
+    z-index: 2 !important;
+    letter-spacing: 0.015em !important;
+    transition: color 0.3s ease !important;
+  }
+
+  /* Reflet brillant discret au survol */
+  .vd-btn-shine {
+    position: absolute !important;
+    top: -50% !important;
+    left: -75% !important;
+    width: 60% !important;
+    height: 200% !important;
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.5) 50%,
+      rgba(255, 255, 255, 0) 100%
+    ) !important;
+    transform: rotate(25deg) !important;
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    pointer-events: none !important;
+    z-index: 1 !important;
+  }
+
+  /* ÉTAT HOVER (Dynamique & Poétique) */
+  .vd-btn:hover {
+    transform: translateY(-2px) !important;
+    color: #882454 !important;
+    border-color: rgba(255, 255, 255, 1) !important;
+
+    /* On renforce légèrement la source de lumière en haut à gauche */
+    background: radial-gradient(
+      ellipse farthest-corner at 10% 10%,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(248, 235, 242, 0.65) 55%,
+      rgba(255, 255, 255, 0.1) 100%
+    ) !important;
+
+    box-shadow: 0px 8px 32px rgba(136, 36, 84, 0.22) !important;
+  }
+
+  .vd-btn:hover .vd-btn-shine {
+    left: 140% !important;
+  }
+
+  .vd-btn:active {
+    transform: translateY(0) scale(0.98) !important;
+  }
+
+  /* TAILLES (Reprenant tes dimensions : 12px 40px) */
+  .vd-btn-sm {
+    padding: 0.55rem 1.75rem !important;
+    font-size: 0.825rem !important;
+  }
+
+  .vd-btn-md {
+    padding: 12px 40px !important;
+    font-size: 0.875rem !important;
+  }
+
+  .vd-btn-lg {
+    padding: 14px 48px !important;
+    font-size: 0.95rem !important;
+  }
+</style>

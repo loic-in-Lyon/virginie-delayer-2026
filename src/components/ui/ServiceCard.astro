@@ -1,0 +1,127 @@
+---
+interface Props {
+  title: string;
+  duree?: string;
+  prix?: string | number;
+  resume?: string;
+  href?: string;
+  class?: string;
+}
+
+const { title, duree, prix, resume, href, class: className = "" } = Astro.props;
+---
+
+<article class={`vd-service-card ${className}`}>
+  <!-- Titre avec la typo Priestacy / Beautiful -->
+  <h3 class="vd-card-title">
+    – {title} –
+  </h3>
+
+  <!-- Meta (Durée | Prix) -->
+  <p class="vd-card-meta">
+    {duree && <span>Durée : {duree}</span>}
+    {duree && prix && <span> | </span>}
+    {prix && <span>Prix : {prix} €</span>}
+  </p>
+
+  <!-- Résumé -->
+  {resume && <p class="vd-card-description">{resume}</p>}
+
+  <!-- Lien de détail -->
+  {
+    href && (
+      <div class="vd-card-action">
+        <a href={href} class="vd-card-link">
+          Voir détails
+        </a>
+      </div>
+    )
+  }
+</article>
+
+<style>
+  .vd-service-card {
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.92) 0%,
+      rgba(253, 248, 250, 0.85) 100%
+    ) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.95) !important;
+    border-radius: 18px !important;
+    padding: 1.85rem 2.25rem !important;
+    box-shadow:
+      0 8px 25px rgba(136, 36, 84, 0.03),
+      inset 0 1px 1px rgba(255, 255, 255, 1) !important;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    text-align: left !important;
+    box-sizing: border-box !important;
+  }
+
+  .vd-service-card:hover {
+    transform: translateY(-2.5px) !important;
+    background: linear-gradient(
+      135deg,
+      #ffffff 0%,
+      rgba(253, 248, 250, 0.95) 100%
+    ) !important;
+    box-shadow:
+      0 12px 32px rgba(136, 36, 84, 0.07),
+      inset 0 1px 1px rgba(255, 255, 255, 1) !important;
+    border-color: rgba(226, 202, 213, 0.5) !important;
+  }
+
+  /* Titre avec la typo Priestacy / Priestacy cursive */
+  .vd-card-title {
+    font-family: "Priestacy", "AlexBrushRegular", cursive !important;
+    font-size: 1.75rem !important;
+    font-weight: 400 !important;
+    color: rgba(25, 1, 20, 0.8) !important; /* #190114A8[cite: 13, 14] */
+    margin: 0 0 0.35rem 0 !important;
+    line-height: 1.2 !important;
+  }
+
+  .vd-card-meta {
+    font-family: inherit !important;
+    font-size: 0.85rem !important;
+    color: #666666 !important;
+    margin: 0 0 0.5rem 0 !important;
+  }
+
+  .vd-card-description {
+    font-family: inherit !important;
+    font-size: 0.875rem !important;
+    font-weight: 300 !important;
+    color: #555555 !important;
+    line-height: 1.55 !important;
+    margin: 0 0 0.85rem 0 !important;
+  }
+
+  .vd-card-action {
+    margin-top: auto !important;
+  }
+
+  .vd-card-link {
+    font-size: 0.825rem !important;
+    font-weight: 400 !important;
+    color: #777777 !important;
+    text-decoration: underline !important;
+    text-decoration-color: #e2cad5 !important;
+    text-underline-offset: 4px !important;
+    transition: all 0.25s ease !important;
+  }
+
+  .vd-service-card:hover .vd-card-link {
+    color: #882454 !important;
+    text-decoration-color: #882454 !important;
+  }
+
+  @media (max-width: 640px) {
+    .vd-service-card {
+      padding: 1.4rem 1.5rem !important;
+    }
+  }
+</style>

@@ -1,0 +1,135 @@
+---
+import { getCollection } from "astro:content";
+import MainLayout from "../../layouts/MainLayout.astro";
+import CalloutSection from "../../components/ui/CalloutSection.astro";
+
+// Import des composants modulaires
+import SoinHero from "../../components/sections/SoinHero.astro";
+import SoinAbout from "../../components/sections/SoinAbout.astro";
+import SoinFeatures from "../../components/sections/SoinFeatures.astro";
+import SoinFaq from "../../components/sections/SoinFaq.astro";
+import SoinNavBottom from "../../components/sections/SoinNavBottom.astro";
+
+export async function getStaticPaths() {
+  const formations = await getCollection(
+    "formations",
+    ({ data }) => !data.draft,
+  );
+
+  return formations.map((item, index) => {
+    const prevItem =
+      formations[index === 0 ? formations.length - 1 : index - 1];
+    const nextItem =
+      formations[index === formations.length - 1 ? 0 : index + 1];
+
+    const slugKey = item.slug || item.id;
+
+    return {
+      params: { slug: slugKey },
+      props: { formation: item, prevItem, nextItem },
+    };
+  });
+}
+
+const { formation, prevItem, nextItem } = Astro.props;
+
+const {
+  title,
+  subtitle,
+  duree,
+  prix,
+  resume,
+  content,
+  benefits = [],
+  targetAudience = [],
+  faq = [],
+  categorie = "Formation Présentielle",
+} = formation.data;
+
+const prevRef = {
+  slug: prevItem.slug || prevItem.id,
+  title: prevItem.data.title,
+};
+
+const nextRef = {
+  slug: nextItem.slug || nextItem.id,
+  title: nextItem.data.title, // Ajout du titre de la formation suivante !
+};
+
+// SEO Schema.org
+const schemaBreadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Accueil",
+      item: "https://virginie-delayer.com",
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Formations",
+      item: "https://virginie-delayer.com/formations-massotherapie",
+    },
+    {
+      "@type": "ListItem",
+      position: 3,
+      name: title,
+      item: `https://virginie-delayer.com/formations/${formation.slug || formation.id}`,
+    },
+  ],
+};
+---
+
+<MainLayout
+  title={`${title} | Formation Massage & Bien-être Lyon | Virginie Delayer`}
+  description={resume || subtitle}
+  bodyId="detail-formation"
+>
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify(schemaBreadcrumb)}
+  />
+
+  <!-- Hero avec fil d'Ariane adapté -->
+  <SoinHero
+    title={title}
+    parentTitle="Formations Massothérapie"
+    parentHref="/formations-massotherapie"
+    categorie={categorie}
+    duree={duree}
+    prix={prix}
+    description={resume || subtitle}
+    reservationLink="/contact"
+  />
+
+  <!-- Contenu & Programme -->
+  <SoinAbout content={content} title="À propos de cette formation" />
+
+  <!-- Objectifs & Profils -->
+  <SoinFeatures benefits={benefits} targetAudience={targetAudience} />
+
+  <!-- FAQ Formation -->
+  <SoinFaq faq={faq} />
+
+  <!-- Navigation entre formations (On passe prevRef & nextRef) -->
+  <SoinNavBottom
+    prevItem={prevRef}
+    nextItem={nextRef}
+    basePath="/formations"
+    labelPrev="Formation précédente"
+    labelNext="Formation suivante"
+  />
+
+  <!-- Callout Contact Final (Version Bateau Origami) -->
+  <CalloutSection
+    variant="boat"
+    tagline="Inscription & Renseignements"
+    title="Prêt à vous former ?"
+    description="Vous souhaitez réserver votre session de formation ou poser vos questions sur le programme ? Contactez-moi directement."
+    buttonText="Me contacter"
+    buttonHref="/contact"
+  />
+</MainLayout>

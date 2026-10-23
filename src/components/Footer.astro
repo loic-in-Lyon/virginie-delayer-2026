@@ -1,0 +1,364 @@
+---
+import { Image } from "astro:assets";
+import lotusImg from "../assets/lotus.webp";
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="vd-footer">
+  <!-- Dégradés radiaux lumineux en arrière-plan -->
+  <div class="vd-footer-glow-1"></div>
+  <div class="vd-footer-glow-2"></div>
+
+  <div class="vd-footer-inner">
+    <!-- Alignement forcé sur une seule ligne desktop -->
+    <div class="vd-footer-row">
+      <!-- Bloc Gauche : Brand + Contact -->
+      <div class="vd-footer-brand-block">
+        <div class="vd-footer-brand">
+          <Image
+            src={lotusImg}
+            alt="fleur de lotus"
+            width={28}
+            height={28}
+            class="vd-footer-logo"
+          />
+          <span class="vd-brand-title">Virginie Delayer</span>
+        </div>
+        <p class="vd-brand-tagline">
+          Massothérapie & Soins Énergétiques à Lyon et ses environs. Reconnectez
+          votre corps et votre esprit.
+        </p>
+        <div class="vd-contact-compact">
+          <p>
+            <strong>Email :</strong>
+            <a href="mailto:virginiedelayerbienetre@gmail.com"
+              >virginiedelayerbienetre@gmail.com</a
+            >
+          </p>
+          <p>
+            <strong>Tél :</strong>
+            <a href="tel:+33660693241">+33 6 60 69 32 41</a>
+          </p>
+        </div>
+      </div>
+
+      <!-- Bloc Droite : Navigation + Soins & Formations -->
+      <div class="vd-footer-cols-wrapper">
+        <div class="vd-footer-col">
+          <h4 class="vd-col-title">Navigation</h4>
+          <ul>
+            <li><a href="/">Accueil</a></li>
+            <li>
+              <a href="/a-propos-massotherapeute-virginiedelayer">Ma démarche</a
+              >
+            </li>
+            <li><a href="/contact">Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="vd-footer-col">
+          <h4 class="vd-col-title">Soins & Formations</h4>
+          <ul>
+            <li><a href="/massages-soins">Massages & Soins</a></li>
+            <li>
+              <a href="/formations-massotherapie">Formations Présentielles</a>
+            </li>
+            <li><a href="/formations-distance">Formations en Ligne</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Séparateur discret -->
+    <div class="vd-footer-divider"></div>
+
+    <!-- Bottom Bar : Copyright, Mentions Légales & Crédit Développeur -->
+    <div class="vd-footer-bottom">
+      <div class="vd-footer-legal">
+        <p>
+          &copy; {currentYear} Virginie Delayer. Tous droits réservés.
+        </p>
+        <span>•</span>
+        <a href="/legal">Mentions Légales</a>
+        <!-- <a href="/legal">Confidentialité</a> -->
+      </div>
+      <span class="vd-dev-credit">
+        Développé avec <span class="vd-heart">♥</span> par <a
+          href="https://www.loicpoosing.fr/"
+          target="_blank"
+          rel="noopener noreferrer">Loïc Poosing</a
+        >
+      </span>
+    </div>
+  </div>
+
+  <!-- Filigrane Géant "VIRGINIE DELAYER" -->
+  <div class="vd-footer-big-text" aria-hidden="true">VIRGINIE DELAYER</div>
+</footer>
+
+<style>
+  .vd-footer {
+    position: relative;
+    background-color: #faf5f3;
+    color: #4a3e3d;
+    padding: 3.5rem 2rem 1.5rem !important;
+    overflow: hidden;
+    font-family: inherit;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .vd-footer-glow-1 {
+    position: absolute;
+    top: -50px;
+    left: -50px;
+    width: 450px;
+    height: 450px;
+    background: radial-gradient(
+      circle,
+      rgba(235, 203, 206, 0.45) 0%,
+      rgba(250, 245, 243, 0) 70%
+    );
+    filter: blur(60px);
+    pointer-events: none;
+  }
+
+  .vd-footer-glow-2 {
+    position: absolute;
+    bottom: -50px;
+    right: -50px;
+    width: 550px;
+    height: 550px;
+    background: radial-gradient(
+      circle,
+      rgba(212, 172, 182, 0.3) 0%,
+      rgba(136, 36, 84, 0.03) 50%,
+      rgba(250, 245, 243, 0) 70%
+    );
+    filter: blur(80px);
+    pointer-events: none;
+  }
+
+  .vd-footer-inner {
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Force la disposition en ligne horizontale */
+  .vd-footer-row {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: flex-start !important;
+    width: 100% !important;
+    gap: 2rem !important;
+    margin-bottom: 2.5rem !important;
+  }
+
+  /* Bloc Brand + Contact */
+  .vd-footer-brand-block {
+    flex: 1 1 50% !important;
+    max-width: 500px !important;
+  }
+
+  .vd-footer-brand {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.65rem !important;
+    margin-bottom: 0.6rem !important;
+  }
+
+  .vd-brand-title {
+    font-family: "Nicholas", serif;
+    font-size: 1.35rem;
+    color: #4f2613;
+    font-weight: 400;
+  }
+
+  .vd-brand-tagline {
+    font-size: 0.875rem;
+    color: #756362;
+    line-height: 1.45;
+    margin: 0 0 0.85rem 0 !important;
+  }
+
+  .vd-contact-compact p {
+    font-size: 0.875rem;
+    color: #6e5e5d;
+    margin: 0 0 0.3rem 0 !important;
+  }
+
+  .vd-contact-compact a {
+    color: #6e5e5d;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .vd-contact-compact a:hover {
+    color: #882454;
+  }
+
+  /* Colonnes de liens côte à côte */
+  .vd-footer-cols-wrapper {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 4rem !important;
+    flex: 1 1 auto !important;
+    justify-content: flex-end !important;
+  }
+
+  .vd-footer-col {
+    min-width: 160px;
+  }
+
+  .vd-col-title {
+    font-family: "Nicholas", serif;
+    font-size: 1.25rem;
+    color: #4f2613;
+    margin: 0 0 1rem 0 !important;
+    font-weight: 400;
+  }
+
+  .vd-footer-col ul {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .vd-footer-col li {
+    margin-bottom: 0.55rem !important;
+  }
+
+  .vd-footer-col a {
+    color: #6e5e5d;
+    text-decoration: none;
+    font-size: 0.875rem;
+    transition: color 0.2s ease;
+  }
+
+  .vd-footer-col a:hover {
+    color: #882454;
+  }
+
+  .vd-footer-divider {
+    height: 1px;
+    width: 100%;
+    background: linear-gradient(
+      90deg,
+      rgba(136, 36, 84, 0) 0%,
+      rgba(136, 36, 84, 0.12) 50%,
+      rgba(136, 36, 84, 0) 100%
+    );
+    margin-bottom: 1.5rem !important;
+  }
+
+  /* Bottom Bar */
+  .vd-footer-bottom {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    font-size: 0.825rem;
+    color: #8d7b7a;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .vd-dev-credit {
+    margin-left: 0.4rem;
+    opacity: 0.9;
+  }
+
+  .vd-dev-credit a {
+    color: #882454;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .vd-dev-credit a:hover {
+    text-decoration: underline;
+  }
+
+  .vd-heart {
+    color: #882454;
+  }
+
+  .vd-footer-legal {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.75rem !important;
+  }
+
+  .vd-footer-legal a {
+    color: #8d7b7a;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .vd-footer-legal a:hover {
+    color: #882454;
+  }
+
+  .vd-footer-big-text {
+    font-family: "Nicholas", serif;
+    font-size: 11vw;
+    font-weight: 300;
+    text-align: center;
+    white-space: nowrap;
+    user-select: none;
+    line-height: 0.8;
+    margin-top: 2rem;
+    margin-bottom: -1rem;
+    background: linear-gradient(
+      180deg,
+      rgba(136, 36, 84, 0.08) 0%,
+      rgba(136, 36, 84, 0.01) 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    pointer-events: none;
+  }
+
+  /* Media query mobile */
+  @media (max-width: 850px) {
+    .vd-footer-row {
+      flex-direction: column !important;
+      gap: 2rem !important;
+    }
+
+    .vd-footer-brand-block {
+      max-width: 100% !important;
+    }
+
+    .vd-footer-cols-wrapper {
+      justify-content: space-between !important;
+      width: 100% !important;
+    }
+  }
+
+  @media (max-width: 500px) {
+    .vd-footer-cols-wrapper {
+      flex-direction: column !important;
+      gap: 1.5rem !important;
+    }
+
+    .vd-footer-bottom {
+      flex-direction: column !important;
+      text-align: center !important;
+    }
+
+    .vd-dev-credit {
+      display: block;
+      margin-left: 0;
+      margin-top: 0.25rem;
+    }
+
+    .vd-footer-big-text {
+      font-size: 13vw;
+    }
+  }
+</style>

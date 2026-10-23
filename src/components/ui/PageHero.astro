@@ -1,0 +1,189 @@
+---
+interface Props {
+  title: string;
+  subtitle?: string;
+  category?: string;
+  badge?: string;
+  ctaText?: string;
+  ctaHref?: string;
+  bgImage?: string;
+}
+
+const {
+  title,
+  subtitle,
+  category,
+  badge,
+  ctaText,
+  ctaHref = "/contact",
+  bgImage,
+} = Astro.props;
+
+// Nettoyage des accents pour la police Priestacy
+function removeAccents(str: string) {
+  if (!str) return "";
+  return str
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/œ/g, "oe")
+    .replace(/Œ/g, "OE");
+}
+
+const cleanTitle = removeAccents(title);
+---
+
+<header class="vd-page-hero">
+  {
+    bgImage && (
+      <div class="vd-hero-bg">
+        <img src={bgImage} alt="" class="vd-hero-img" />
+        <div class="vd-hero-overlay" />
+      </div>
+    )
+  }
+
+  <div class="vd-hero-container">
+    <!-- Tagline / Catégorie + Badge optionnel "Nouveau !" -->
+    <div class="vd-hero-top-tag">
+      {category && <span class="vd-hero-category">{category}</span>}
+      {badge && <span class="vd-badge-nouveau">{badge}</span>}
+    </div>
+
+    <!-- Titre principal en Priestacy Bordeaux -->
+    <h1 class="vd-hero-title">{cleanTitle}</h1>
+
+    {subtitle && <p class="vd-hero-subtitle">{subtitle}</p>}
+
+    {
+      ctaText && (
+        <div class="vd-hero-cta">
+          <a href={ctaHref} class="vd-btn-primary">
+            {ctaText}
+          </a>
+        </div>
+      )
+    }
+  </div>
+</header>
+
+<style>
+  .vd-page-hero {
+    position: relative !important;
+    width: 100% !important;
+    min-height: 52vh !important;
+    padding-top: 7.5rem !important;
+    padding-bottom: 4.5rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: hidden !important;
+    background-color: #faf5f7 !important;
+    box-sizing: border-box !important;
+  }
+
+  .vd-hero-bg {
+    position: absolute !important;
+    inset: 0 !important;
+    z-index: 1 !important;
+  }
+
+  .vd-hero-img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+
+  .vd-hero-overlay {
+    position: absolute !important;
+    inset: 0 !important;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.72) 0%,
+      rgba(253, 248, 250, 0.88) 100%
+    ) !important;
+  }
+
+  .vd-hero-container {
+    position: relative !important;
+    z-index: 2 !important;
+    max-width: 820px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+    padding: 0 1.5rem !important;
+    text-align: center !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  .vd-hero-top-tag {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.6rem !important;
+    margin-bottom: 1rem !important;
+  }
+
+  .vd-hero-category {
+    font-family: "Nicholas", serif !important;
+    font-size: 1.5rem !important;
+    color: rgba(25, 1, 20, 0.65) !important;
+  }
+
+  /* Badge NOUVEAU rappel de la Navbar */
+  .vd-badge-nouveau {
+    font-size: 0.725rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.05em !important;
+    text-transform: uppercase !important;
+    color: #ffffff !important;
+    background: linear-gradient(135deg, #882454, #d67e60) !important;
+    padding: 0.2rem 0.65rem !important;
+    border-radius: 50px !important;
+    box-shadow: 0 2px 8px rgba(136, 36, 84, 0.25) !important;
+  }
+
+  .vd-hero-title {
+    font-family: "Priestacy", cursive !important;
+    font-size: 3.75rem !important;
+    color: #882454 !important;
+    margin: 0 0 0.75rem 0 !important;
+    font-weight: 400 !important;
+    line-height: 1.1 !important;
+  }
+
+  .vd-hero-subtitle {
+    font-size: 0.95rem !important;
+    color: #555555 !important;
+    line-height: 1.65 !important;
+    font-weight: 300 !important;
+    max-width: 640px !important;
+    margin: 0 0 1.75rem 0 !important;
+  }
+
+  .vd-btn-primary {
+    display: inline-block !important;
+    background: rgba(255, 255, 255, 0.9) !important;
+    color: #4f2613 !important;
+    padding: 0.75rem 2rem !important;
+    border-radius: 50px !important;
+    font-size: 0.9rem !important;
+    text-decoration: none !important;
+    border: 1px solid rgba(255, 255, 255, 0.95) !important;
+    box-shadow: 0 4px 15px rgba(136, 36, 84, 0.06) !important;
+    transition: all 0.3s ease !important;
+  }
+
+  .vd-btn-primary:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 25px rgba(136, 36, 84, 0.12) !important;
+    color: #882454 !important;
+  }
+
+  @media (max-width: 768px) {
+    .vd-hero-title {
+      font-size: 2.8rem !important;
+    }
+  }
+</style>

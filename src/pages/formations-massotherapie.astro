@@ -1,0 +1,127 @@
+---
+import { getCollection } from "astro:content";
+import MainLayout from "../layouts/MainLayout.astro";
+
+// Importation de nos composants modulaires
+import PageHero from "../components/ui/PageHero.astro";
+import ServiceIntro from "../components/ui/ServiceIntro.astro";
+import StepsSection from "../components/ui/StepsSection.astro";
+import ServicesSection from "../components/ui/ServicesSection.astro";
+import CalloutSection from "../components/ui/CalloutSection.astro";
+
+// Images de fond
+import heroFormationsImg from "../assets/heroFormations.webp";
+import bgFlowers from "../assets/deroulement.webp";
+
+// 1. Récupération dynamique des formations en présentiel
+const formations = await getCollection("formations", ({ data }) => !data.draft);
+
+// 2. Les 4 étapes du déroulement d'une formation en présentiel
+const stepsFormation = [
+  {
+    number: "1",
+    title: "Apprentissage Théorique",
+    description:
+      "Anatomie, énergétique, postures et principes fondamentaux transmis avec clarté via des supports pédagogiques complets.",
+  },
+  {
+    number: "2",
+    title: "Démonstration Pas à Pas",
+    description:
+      "Observation détaillée de chaque geste, rythme et enchaînement du protocole de massage guidé par Virginie.",
+  },
+  {
+    number: "3",
+    title: "Pratique Guidée en Binôme",
+    description:
+      "Mise en pratique immédiate avec corrections personnalisées en temps réel pour ressentir et intégrer le bon geste.",
+  },
+  {
+    number: "4",
+    title: "Validation & Certificat",
+    description:
+      "Évaluation de la pratique en fin de session et remise de votre certificat de réalisation pour exercer en toute confiance.",
+  },
+];
+
+// 3. SEO JSON-LD pour les formations en présentiel à Lyon / Oullins
+const schemaFormations = {
+  "@context": "https://schema.org",
+  "@type": "EducationalOrganization",
+  name: "Virginie Delayer - Formations Massothérapie Présentielles",
+  description:
+    "Formations certifiantes en massothérapie et soins énergétiques en présentiel à Oullins et Lyon.",
+  url: "https://virginie-delayer.com/formations",
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Catalogue des Formations en Présentiel",
+    itemListElement: formations.map((f) => ({
+      "@type": "Offer",
+      itemOffered: {
+        "@type": "Course",
+        name: f.data.title,
+        description: f.data.resume || f.data.subtitle,
+      },
+      price: f.data.prix,
+      priceCurrency: "EUR",
+    })),
+  },
+};
+---
+
+<MainLayout
+  title="Formations Massothérapie & Soins Énergétiques en Présentiel à Lyon | Virginie Delayer"
+  description="Apprenez l'art du massage bien-être en petit groupe à Oullins et Lyon. Formations pratiques certifiantes dispensées par Virginie Delayer."
+  bodyId="formations"
+>
+  <!-- Balisage SEO Schema.org -->
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify(schemaFormations)}
+  />
+
+  <!-- 1. HERO PAGE -->
+  <!-- tagline="Transmettre l'art du geste" -->
+  <PageHero
+    title="Formations en Presentiel"
+    subtitle="Apprenez les techniques de massage et soins énergétiques au sein de nos ateliers en petit groupe pour une maîtrise guidée, bienveillante et concrète."
+    ctaText="Découvrir les formations"
+    ctaHref="#catalogue"
+    bgImage={heroFormationsImg.src}
+  />
+
+  <!-- 2. INTRO SERVICE (Typo Nicholas + Surtitre Manuscrit) -->
+  <ServiceIntro
+    tagline="Un apprentissage à taille humaine"
+    title="Transmettre avec passion, bienveillance et precision"
+    description="Chaque session de formation est conçue pour vous transmettre l'excellence du geste et l'écoute du corps. En petit groupe, vous bénéficiez d'un suivi sur mesure afin de développer votre toucher, votre posture et votre confiance professionnelle."
+  />
+
+  <!-- 3. DÉROULEMENT D'UNE FORMATION (Cartes Glassmorphism) -->
+  <StepsSection
+    title="Deroulement d'une formation"
+    subtitle="Une pédagogie immersive alliant théorie, démonstrations et ateliers pratiques guidés."
+    steps={stepsFormation}
+    bgImage={bgFlowers.src}
+  />
+
+  <!-- 4. CATALOGUE DES FORMATIONS (Collection "formations" + Cartes aux titres manuscrits) -->
+  <div id="catalogue">
+    <ServicesSection
+      title="Mes differentes Formations"
+      subtitle="Chaque formation est une invitation à maîtriser l'art du toucher. Choisissez le module adapté à vos aspirations."
+      items={formations}
+      basePath="/formations"
+    />
+  </div>
+
+  <!-- Callout Contact Final (Version Bateau) -->
+  <CalloutSection
+    variant="boat"
+    tagline="Transmission & Passion"
+    title="Prêt a transmettre le bien-etre ?"
+    description="Vous souhaitez en savoir plus sur le calendrier des sessions, le déroulement des cours en présentiel ou les modalités d'inscription ? Je répondrai à toutes vos questions."
+    buttonText="Me contacter"
+    buttonHref="/contact"
+  />
+</MainLayout>

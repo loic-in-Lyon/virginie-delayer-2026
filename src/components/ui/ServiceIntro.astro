@@ -1,0 +1,102 @@
+---
+interface Props {
+  tagline?: string;
+  title: string;
+  description: string;
+  class?: string;
+}
+
+const {
+  tagline = "Massages bien-être à Domicile",
+  title = "Une expérience Personnalisée sur Lyon et alentours",
+  description = "Chaque séance de bien-être est une expérience unique, adaptée à vos besoins spécifiques. En tant que massothérapeute expert, je me déplace à votre domicile avec tout le matériel nécessaire pour créer un espace de relaxation et de guérison.",
+  class: className = "",
+} = Astro.props;
+---
+
+<section class={`vd-service-intro paddingSection ${className}`}>
+  <div class="vd-intro-container">
+    <!-- Colonne Gauche : Surtitre manuscrit + Titre en Nicholas -->
+    <div class="vd-intro-left">
+      {tagline && <span class="vd-intro-tagline">{tagline}</span>}
+      <h2 class="vd-intro-title">
+        {title}
+      </h2>
+    </div>
+
+    <!-- Colonne Droite : Description fine et aérée -->
+    <div class="vd-intro-right">
+      <p class="vd-intro-description">
+        {description}
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .vd-service-intro {
+    padding-top: 4rem !important;
+    padding-bottom: 4rem !important;
+    width: 100% !important;
+  }
+
+  .vd-intro-container {
+    max-width: 1050px !important;
+    margin: 0 auto !important;
+    padding: 0 1.5rem !important;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 3.5rem !important;
+    align-items: center !important;
+  }
+
+  /* Surtitre Manuscrit */
+  .vd-intro-tagline {
+    display: block !important;
+    font-family:
+      "AlexBrushRegular", "Priestacy", "Alex Brush", cursive !important;
+    font-size: 1.85rem !important;
+    color: #4f2613 !important;
+    line-height: 1.2 !important;
+    margin-bottom: 0.25rem !important;
+    font-weight: normal !important;
+  }
+
+  /* Titre Principal avec la typo Nicholas */
+  .vd-intro-title {
+    font-family: "Nicholas", "AlexBrushRegular", serif !important;
+    font-size: 2.35rem !important;
+    color: #4f2613 !important;
+    line-height: 1.15 !important;
+    font-weight: 300 !important;
+    letter-spacing: -0.01em !important;
+    margin: 0 !important;
+  }
+
+  /* Colonne de droite */
+  .vd-intro-description {
+    font-family: inherit !important;
+    font-size: 0.875rem !important;
+    color: #666666 !important;
+    line-height: 1.65 !important;
+    font-weight: 300 !important;
+    margin: 0 !important;
+    text-align: left !important;
+  }
+
+  /* Responsive pour tablettes & mobiles */
+  @media (max-width: 768px) {
+    .vd-intro-container {
+      grid-template-columns: 1fr !important;
+      gap: 1.5rem !important;
+    }
+
+    .vd-intro-title {
+      font-size: 1.95rem !important;
+    }
+
+    .vd-intro-tagline {
+      font-size: 1.6rem !important;
+    }
+  }
+</style>

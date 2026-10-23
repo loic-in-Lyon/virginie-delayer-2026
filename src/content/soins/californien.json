@@ -1,0 +1,33 @@
+{
+  "title": "Californien",
+  "subtitle": "Détente corporelle douce et enveloppante",
+  "metaTitle": "Massage Californien - Soin de Relaxation Profonde",
+  "metaDescription": "Offrez-vous un massage californien. Des mouvements doux, lents et enveloppants pour soulager le stress et vous reconnecter à votre corps.",
+  "duree": "1h",
+  "prix": "70",
+  "resume": "Détente corporelle et relaxation enveloppante",
+  "content": "Le massage californien offre une expérience relaxante et enveloppante, alliant des mouvements fluides et doux pour libérer les tensions et favoriser la détente profonde du corps et de l'esprit.",
+  "targetAudience": [
+    "Personnes stressées ou surmenées recherchant une pause douceur",
+    "Première expérience de massage",
+    "Besoin de déconnexion totale et d'apaisement"
+  ],
+  "benefits": [
+    "Relaxation musculaire et apaisement nerveux",
+    "Réduction du stress et de l'anxiété",
+    "Stimulation douce de la circulation sanguine"
+  ],
+  "faq": [
+    {
+      "question": "Est-ce que le massage californien convient pour une première fois ?",
+      "answer": "Oui, c'est le soin idéal pour débuter. Ses mouvements lents, enveloppants et fluides favorisent un lâcher-prise en douceur sans pression douloureuse."
+    },
+    {
+      "question": "Ce soin aide-t-il à réduire l'anxiété ?",
+      "answer": "Absolument. Il apaise le système nerveux, réduit le niveau de stress et favorise un sommeil plus réparateur."
+    }
+  ],
+  "featured": false,
+  "isNew": false,
+  "draft": false
+}

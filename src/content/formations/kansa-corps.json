@@ -1,0 +1,39 @@
+{
+  "title": "Kansa Corps",
+  "subtitle": "Expérience sensorielle et bol de métaux Kansa",
+  "metaTitle": "Formation Massage Kansa Corps en Présentiel",
+  "metaDescription": "Découvrez le massage Kansa Corps en formation présentielle. Technique indienne ancestrale alternant bol Kansa et massage manuel.",
+  "duree": "1 jour et demi",
+  "prix": "360",
+  "targetAudience": [
+    "Praticiens en massage recherchant des prestations holistiques rares",
+    "Thérapeutes intéressés par les rituels indiens et l'utilisation des métaux sacrés",
+    "Esthéticiennes souhaitant diversifier leur carte de soins corporels"
+  ],
+  "prerequis": "Praticiens ou passionnés de massage",
+  "resume": "Expérience sensorielle unique avec bol Kansa",
+  "content": "La formation en massage Kansa Corps offre une immersion dans une technique ancienne de guérison indienne utilisant un bol en alliage de métaux spécifique. Un massage corps ultra complet, unique en son genre, alternant massage avec kansa et massage manuel pour une connexion au cœur de son être.",
+  "programme": [
+    "Manipulation du bol Kansa sur les points énergétiques",
+    "Techniques de drainage, de circulation sanguine et lymphatique",
+    "Alternance fluide entre passes au Kansa et modelage manuel"
+  ],
+  "benefits": [
+    "Apprentissage de deux techniques complémentaires",
+    "Élimination des toxines et profonde détente",
+    "Expérience holistique corps, âme et esprit"
+  ],
+  "faq": [
+    {
+      "question": "Où puis-je me procurer un bol Kansa après la formation ?",
+      "answer": "Des conseils et des adresses de fournisseurs spécialisés vous seront partagés durant la session."
+    },
+    {
+      "question": "Combien de personnes participent à la session ?",
+      "answer": "Les sessions se font en petit groupe pour garantir un accompagnement personnalisé et de qualité."
+    }
+  ],
+  "featured": false,
+  "isNew": false,
+  "draft": true
+}

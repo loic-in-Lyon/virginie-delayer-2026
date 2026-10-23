@@ -1,0 +1,33 @@
+{
+  "title": "Oriental",
+  "subtitle": "Rituel doux, enveloppant et apaisement du mental",
+  "metaTitle": "Soin Massage Oriental - Détente & Évasion Sensorielle",
+  "metaDescription": "Offrez-vous un soin massage oriental traditionnel. Un rituel doux et enveloppant aux mouvements fluides pour libérer le mental et apaiser le corps.",
+  "duree": "1h",
+  "prix": "70",
+  "resume": "Détente sensorielle et lâcher-prise inspiré des traditions ancestrales",
+  "content": "Le soin massage oriental invite à un véritable voyage sensoriel inspiré des traditions ancestrales. Ce massage, à la fois doux et enveloppant, utilise des mouvements fluides et rythmés pour relâcher les tensions musculaires, apaiser le mental et offrir un moment de déconnexion totale.",
+  "targetAudience": [
+    "Personnes recherchant une détente enveloppante et cocooning",
+    "Périodes de surmenage intellectuel ou d'anxiété",
+    "En quête d'un soin réconfortant et apaisant"
+  ],
+  "benefits": [
+    "Détente physique profonde et libération des tensions",
+    "Apaisement du mental et lâcher-prise immédiat",
+    "Expérience sensorielle chaleureuse et réconfortante"
+  ],
+  "faq": [
+    {
+      "question": "Le massage oriental est-il un soin plutôt doux ou appuyé ?",
+      "answer": "C'est un soin enveloppant et fluide qui privilégie les manœuvres lentes et réconfortantes pour dénouer les tensions en douceur."
+    },
+    {
+      "question": "Quels sont les effets ressentis après la séance ?",
+      "answer": "Une sensation immédiate de chaleur, de confort et d'apaisement du mental."
+    }
+  ],
+  "featured": false,
+  "isNew": true,
+  "draft": false
+}

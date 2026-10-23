@@ -1,0 +1,88 @@
+---
+import GlassCard from "../ui/GlassCard.astro";
+
+interface FaqItem {
+  question: string;
+  answer: string;
+}
+
+interface Props {
+  faq: FaqItem[];
+  title?: string;
+  subtitle?: string;
+}
+
+const {
+  faq = [],
+  title = "Questions fréquentes",
+  subtitle = "Vos réponses",
+} = Astro.props;
+
+if (!faq || faq.length === 0) return null;
+
+// Génération automatique du Schema.org JSON-LD
+const schemaFaq = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faq.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: item.answer,
+    },
+  })),
+};
+---
+
+<section class="py-12 sm:py-16">
+  <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+    <!-- Entête de la FAQ -->
+    <div class="text-center space-y-2 mb-10">
+      <span
+        class="text-xs font-semibold uppercase tracking-widest text-emerald-700 bg-emerald-100/60 px-3 py-1 rounded-full border border-emerald-200/50 inline-block"
+      >
+        {subtitle}
+      </span>
+      <h2 class="font-serif text-3xl sm:text-4xl font-bold text-stone-800">
+        {title}
+      </h2>
+    </div>
+
+    <!-- Accordéon -->
+    <div class="space-y-4">
+      {
+        faq.map((item, index) => (
+          <GlassCard class="!p-0 overflow-hidden">
+            <details class="group p-6 [&_summary::-webkit-details-marker]:hidden">
+              <summary class="flex cursor-pointer items-center justify-between gap-4 font-serif text-lg font-semibold text-stone-800 transition-colors group-hover:text-emerald-800">
+                <span>{item.question}</span>
+                <span class="shrink-0 transition-transform duration-300 group-open:-rotate-180 text-emerald-700">
+                  <svg
+                    class="h-5 w-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </span>
+              </summary>
+              <p class="mt-4 text-sm sm:text-base text-stone-600 leading-relaxed border-t border-stone-100 pt-4">
+                {item.answer}
+              </p>
+            </details>
+          </GlassCard>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Injection des données structurées SEO -->
+<script type="application/ld+json" set:html={JSON.stringify(schemaFaq)} />

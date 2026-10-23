@@ -1,0 +1,192 @@
+---
+import { Image } from "astro:assets";
+import MainLayout from "../layouts/MainLayout.astro";
+
+import lotusImg from "../assets/lotus.webp";
+import bgIrisImg from "../assets/bg_1.webp";
+import virginieImg from "../assets/virginie.webp";
+---
+
+<MainLayout
+  title="Virginie Delayer – Praticienne bien-être à Oullins près de Lyon"
+  bodyId="about-page"
+>
+  <!-- Hero Ma Démarche -->
+  <header class="paddingSection hero_About" id="hero">
+    <h1>Un Voyage vers la Guérison et l'Harmonie</h1>
+    <p>Découvrez le pouvoir transformateur du toucher bienveillant</p>
+  </header>
+
+  <!-- Section Intro -->
+  <section class="paddingSection" id="intro">
+    <div class="container row">
+      <div class="about_content-2-left">
+        <h2>
+          <span>Virginie Delayer</span>
+          Massothérapeute
+          <br /><br />
+        </h2>
+        <p class="mb-6vh">
+          Animée par une passion profonde pour le bien-être, ma vie a été une
+          quête constante d'équilibre et d'harmonie. Cette recherche personnelle
+          m'a conduite à embrasser diverses disciplines de la massothérapie et
+          des soins énergétiques. Chaque étape de mon parcours m'a permis de me
+          reconnecter avec moi-même et de découvrir ma véritable vocation :
+          aider les autres à trouver leur propre chemin vers la sérénité,
+          l'équilibre corps-esprit-cœur, et la joie de vivre.
+        </p>
+        <div class="about_image-2 hide-tablet">
+          <Image
+            class="virginie"
+            src={virginieImg}
+            alt="virginie delayer"
+            width={300}
+            height={400}
+          />
+          <div>
+            <h3>La Dualité de Lyon : Charme et Pression</h3>
+            <p class="mb-6vh">
+              Lyon, ma ville natale, offre un cadre de vie qui mêle
+              harmonieusement dynamisme culturel et beauté historique. Ses
+              cafés, ses festivals et ses quartiers pittoresques témoignent d'un
+              riche patrimoine et d'un art de vivre séduisant. Cependant, sous
+              cette façade attrayante, la vie urbaine moderne à Lyon présente
+              également ses défis.
+              <br /><br />
+              Comme de nombreux Lyonnais, j'ai ressenti la pression de jongler avec
+              les exigences du quotidien. Cette tension subtile, accumulée au fil
+              du temps, affecte profondément notre bien-être. Face à l'épuisement
+              et au déséquilibre, j'ai pris conscience de la nécessité de me recentrer.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="about_image">
+        <div class="about_image-1">
+          <Image
+            class="about_image-large"
+            src={bgIrisImg}
+            alt="fleur iris"
+            width={500}
+            height={600}
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services / Massothérapie -->
+  <section class="paddingSection" id="services">
+    <div class="container">
+      <h2>
+        La Massothérapie
+        <span>Un Chemin Vers l'Equilibre pour Tous</span>
+      </h2>
+      <p class="mb-6vh">
+        Face aux turbulences de la vie citadine, j'ai trouvé refuge et passion
+        dans la massothérapie. Cette pratique ne s'est pas seulement avérée être
+        un pilier pour ma propre sérénité, mais aussi un moyen d'apporter
+        équilibre et tranquillité aux autres. Je m'engage désormais à aider un
+        éventail de personnes – de mes proches bien-aimés à mes patients fidèles
+        et mes élèves dévoués.
+      </p>
+    </div>
+  </section>
+
+  <!-- Quote -->
+  <section class="paddingSection quote bg-1">
+    <div class="container">
+      <Image src={lotusImg} alt="fleur de lotus" width={120} />
+      <span>"Être bien, c'est être soi"</span>
+    </div>
+  </section>
+
+  <!-- Présentation Avenir -->
+  <section class="paddingSection" id="about">
+    <div class="container row">
+      <div class="about_content-2-left">
+        <h2>
+          Vers l'Avenir
+          <br />
+          <span>Mes Prochains Pas dans le Bien-etre</span>
+        </h2>
+        <p class="mb-6vh">
+          Je suis Virginie Delayer. Animée par ma passion et soutenue par une
+          expertise solide, je poursuis la mission d'enrichir votre vie en vous
+          aidant à retrouver équilibre, détente et joie.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quote -->
+  <section class="paddingSection quote bg-1">
+    <div class="container">
+      <Image src={lotusImg} alt="fleur de lotus" width={120} />
+    </div>
+  </section>
+
+  <!-- Écoles & Horizons (Lyon à Valence) -->
+  <section id="ecoles" class="paddingSection separatorSection">
+    <div class="container">
+      <h2><span>Elargir les Horizons</span> Sur Lyon et Alentours</h2>
+
+      <div class="card-wrapper">
+        <div class="card">
+          <p>
+            Ma pratique de la massothérapie à Lyon prend une forme unique :
+            j’apporte le bien-être directement chez vous, transformant votre
+            espace personnel en un sanctuaire de relaxation et de guérison.
+          </p>
+          <ul>
+            <li><strong>Nom :</strong> Mme. Virginie Delayer</li>
+            <li><strong>Email :</strong> virginiedelayerbienetre@gmail.com</li>
+            <li><strong>Téléphone :</strong> +33 6 60 69 32 41</li>
+            <li><strong>Zone de service :</strong> Lyon et ses environs</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <p>
+            Parallèlement, je transmets mon savoir et mon expérience au sein de
+            l’LFMBE, une école spécialisée dans les formations professionnelles
+            en massage bien-être.
+          </p>
+          <ul>
+            <li><strong>Nom de l’école :</strong> LFMBE</li>
+            <li>
+              <strong>Spécialité :</strong> Formations professionnelles en massage
+              bien-être
+            </li>
+            <li>
+              <strong>Public :</strong> Débutants et praticiens en perfectionnement
+            </li>
+            <li>
+              <strong>Approche :</strong> Transmission en petits groupes avec accompagnement
+              personnalisé
+            </li>
+          </ul>
+          <a href="https://lfmbe.fr/" target="_blank" rel="noopener" class="btn"
+            >Découvrir l’école</a
+          >
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section CTA -->
+  <section id="cta" class="bg-8">
+    <div class="container small">
+      <h2>
+        Me contacter
+        <span>Je suis a votre ecoute</span>
+      </h2>
+      <p class="mb-6vh">
+        Souhaitez-vous discuter de vos besoins en bien-être ou en savoir plus
+        sur les services et programmes d'apprentissage ? Laissez-moi un message
+        ou contactez-moi directement.
+      </p>
+      <a href="/contact" class="btn">Me contacter</a>
+    </div>
+  </section>
+</MainLayout>

@@ -1,0 +1,196 @@
+---
+import { getCollection } from "astro:content";
+
+// Récupération de toutes les offres pour alimenter dynamiquement le sous-menu
+const soins = await getCollection("soins", ({ data }) => !data.draft);
+const formations = await getCollection("formations", ({ data }) => !data.draft);
+const formationsDistance = await getCollection(
+  "formations-distance",
+  ({ data }) => !data.draft,
+);
+---
+
+<div class="card max-w-2xl mx-auto text-left p-6 sm:p-10">
+  <form
+    action="https://formspree.io/f/ton-id-formspree"
+    method="POST"
+    id="contactForm"
+    class="space-y-6"
+  >
+    <!-- 1. Type de demande -->
+    <div class="space-y-2">
+      <label for="category" class="block text-sm font-medium text-stone-700">
+        De quoi s'agit-il ? *
+      </label>
+      <select
+        id="category"
+        name="category"
+        required
+        class="w-full rounded-md border border-stone-200 bg-white/90 px-4 py-3 text-stone-800 shadow-sm focus:border-stone-500 focus:outline-none focus:ring-1 focus:ring-stone-500"
+      >
+        <option value="" disabled selected>-- Choisissez une option --</option>
+        <option value="soin">Réserver un Soin / Massage bien-être</option>
+        <option value="formation"
+          >S'inscrire à une Formation en présentiel</option
+        >
+        <option value="formation-distance"
+          >Suivre une Formation en ligne (E-learning)</option
+        >
+        <option value="renseignement">Question / Renseignement général</option>
+      </select>
+    </div>
+
+    <!-- 2. Sélection précise (Conditionnelle) -->
+    <div id="serviceSelectWrapper" class="space-y-2 hidden">
+      <label for="service" class="block text-sm font-medium text-stone-700">
+        Choisissez votre prestation ou formation *
+      </label>
+      <select
+        id="service"
+        name="service"
+        class="w-full rounded-md border border-stone-200 bg-white/90 px-4 py-3 text-stone-800 shadow-sm focus:border-stone-500 focus:outline-none focus:ring-1 focus:ring-stone-500"
+      >
+        <!-- Rempli en JS -->
+      </select>
+    </div>
+
+    <!-- 3. Encadré Récapitulatif Contextuel -->
+    <div
+      id="recapCard"
+      class="hidden p-4 rounded-lg bg-stone-50/80 border border-stone-200/60 text-sm text-stone-700 space-y-1"
+    >
+      <div
+        class="font-serif font-bold text-stone-900 text-base"
+        id="recapTitle"
+      >
+      </div>
+      <p id="recapDetails" class="text-xs text-stone-500"></p>
+      <p id="recapResume" class="pt-1 italic"></p>
+    </div>
+
+    <!-- 4. Coordonnées -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div class="space-y-2">
+        <label for="name" class="block text-sm font-medium text-stone-700"
+          >Prénom & Nom *</label
+        >
+        <input
+          type="text"
+          id="name"
+          name="name"
+          required
+          placeholder="ex: Sophie Bernard"
+          class="w-full rounded-md border border-stone-200 bg-white/90 px-4 py-2.5 text-stone-800 shadow-sm focus:border-stone-500 focus:outline-none"
+        />
+      </div>
+
+      <div class="space-y-2">
+        <label for="email" class="block text-sm font-medium text-stone-700"
+          >Email *</label
+        >
+        <input
+          type="email"
+          id="email"
+          name="email"
+          required
+          placeholder="sophie@example.com"
+          class="w-full rounded-md border border-stone-200 bg-white/90 px-4 py-2.5 text-stone-800 shadow-sm focus:border-stone-500 focus:outline-none"
+        />
+      </div>
+    </div>
+
+    <div class="space-y-2">
+      <label for="phone" class="block text-sm font-medium text-stone-700"
+        >Téléphone (Optionnel - Pour être rappelé)</label
+      >
+      <input
+        type="tel"
+        id="phone"
+        name="phone"
+        placeholder="06 00 00 00 00"
+        class="w-full rounded-md border border-stone-200 bg-white/90 px-4 py-2.5 text-stone-800 shadow-sm focus:border-stone-500 focus:outline-none"
+      />
+    </div>
+
+    <!-- 5. Message & Préférences de créneaux -->
+    <div class="space-y-2">
+      <label for="message" class="block text-sm font-medium text-stone-700">
+        Votre message ou vos disponibilités (jours / créneaux souhaités) *
+      </label>
+      <textarea
+        id="message"
+        name="message"
+        rows="4"
+        required
+        placeholder="Indiquez ici vos questions ou vos créneaux préférés (ex: mardi après-midi, samedi matin...)..."
+        class="w-full rounded-md border border-stone-200 bg-white/90 px-4 py-2.5 text-stone-800 shadow-sm focus:border-stone-500 focus:outline-none"
+      ></textarea>
+    </div>
+
+    <!-- Bouton d'envoi -->
+    <div class="text-center pt-2">
+      <button type="submit" class="btn w-full sm:w-auto cursor-pointer">
+        Envoyer ma demande
+      </button>
+    </div>
+  </form>
+</div>
+
+<!-- Données JSON injectées proprement pour le script -->
+<script is:inline define:vars={{ soins, formations, formationsDistance }}>
+  const categorySelect = document.getElementById("category");
+  const serviceWrapper = document.getElementById("serviceSelectWrapper");
+  const serviceSelect = document.getElementById("service");
+
+  const recapCard = document.getElementById("recapCard");
+  const recapTitle = document.getElementById("recapTitle");
+  const recapDetails = document.getElementById("recapDetails");
+  const recapResume = document.getElementById("recapResume");
+
+  // Stockage combiné des collections
+  const dataStore = {
+    soin: soins,
+    formation: formations,
+    "formation-distance": formationsDistance,
+  };
+
+  categorySelect?.addEventListener("change", (e) => {
+    const val = e.target.value;
+
+    if (val && dataStore[val]) {
+      const items = dataStore[val];
+
+      // Remplir le 2e select
+      serviceSelect.innerHTML =
+        '<option value="" disabled selected>-- Choisissez dans la liste --</option>' +
+        items
+          .map(
+            (item) =>
+              `<option value="${item.id}">${item.data.title} (${item.data.duree} - ${item.data.prix}€)</option>`,
+          )
+          .join("");
+
+      serviceWrapper.classList.remove("hidden");
+      recapCard.classList.add("hidden");
+    } else {
+      serviceWrapper.classList.add("hidden");
+      recapCard.classList.add("hidden");
+    }
+  });
+
+  serviceSelect?.addEventListener("change", (e) => {
+    const category = categorySelect.value;
+    const selectedId = e.target.value;
+
+    if (dataStore[category]) {
+      const selectedItem = dataStore[category].find((i) => i.id === selectedId);
+      if (selectedItem) {
+        recapTitle.textContent = selectedItem.data.title;
+        recapDetails.textContent = `⏱ Durée : ${selectedItem.data.duree} | 💶 Tarif : ${selectedItem.data.prix} €`;
+        recapResume.textContent =
+          selectedItem.data.resume || selectedItem.data.subtitle || "";
+        recapCard.classList.remove("hidden");
+      }
+    }
+  });
+</script>

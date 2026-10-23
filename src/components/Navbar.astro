@@ -1,0 +1,557 @@
+---
+import Button from "./ui/Button.astro";
+---
+
+<header class="vd-header">
+  <div class="vd-nav-container">
+    <!-- GAUCHE : Logo (Toujours visible) -->
+    <div class="vd-nav-left">
+      <a href="/" class="vd-brand-logo"> Virginie Delayer </a>
+    </div>
+
+    <!-- CENTRE : Navigation Desktop -->
+    <div class="vd-nav-center">
+      <a href="/" class="vd-link">Accueil</a>
+
+      <!-- Dropdown Desktop -->
+      <div class="vd-dropdown">
+        <button type="button" class="vd-dropdown-btn">
+          <span>Offres & Services</span>
+
+          <span class="vd-pulse-wrapper" title="Nouveau service disponible">
+            <span class="vd-pulse-glow"></span>
+            <span class="vd-pulse-core"></span>
+          </span>
+
+          <svg
+            class="vd-chevron"
+            viewBox="0 0 24 24"
+            width="14"
+            height="14"
+            stroke="currentColor"
+            stroke-width="2"
+            fill="none"
+          >
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </button>
+
+        <div class="vd-dropdown-menu">
+          <a href="/massages-soins" class="vd-dropdown-item">
+            <span class="vd-item-title">Soins & Massages</span>
+            <span class="vd-item-sub">À domicile sur Lyon & Oullins</span>
+          </a>
+
+          <a href="/formations-massotherapie" class="vd-dropdown-item">
+            <span class="vd-item-title">Formations Présentielles</span>
+            <span class="vd-item-sub">Apprentissage certifiant guidé</span>
+          </a>
+
+          <a
+            href="/formations-distance"
+            class="vd-dropdown-item vd-item-featured"
+          >
+            <div class="vd-item-header">
+              <span class="vd-item-title">Formations en Ligne</span>
+              <span class="vd-tag-new">Nouveau !</span>
+            </div>
+            <span class="vd-item-sub"
+              >E-learning & autonomie à votre rythme</span
+            >
+          </a>
+        </div>
+      </div>
+
+      <a href="/a-propos-massotherapeute-virginiedelayer" class="vd-link"
+        >Ma Démarche</a
+      >
+    </div>
+
+    <!-- DROITE : Instagram & Contact Desktop -->
+    <div class="vd-nav-right">
+      <a
+        href="https://www.instagram.com/virginiedelayerbienetre"
+        target="_blank"
+        rel="noopener"
+        class="vd-insta"
+        title="Instagram"
+      >
+        <svg viewBox="0 0 40 40" width="22" height="22">
+          <path
+            fill="#230623"
+            d="M26.66 5a8.33 8.33 0 0 1 8.33 8.33v13.33a8.33 8.33 0 0 1-8.33 8.33H13.33a8.33 8.33 0 0 1-8.33-8.33V13.33a8.33 8.33 0 0 1 8.33-8.33h13.33Zm-6.66 8.33a6.66 6.66 0 1 0 0 13.33 6.66 6.66 0 0 0 0-13.33Zm0 3.33a3.33 3.33 0 1 1 0 6.66 3.33 3.33 0 0 1 0-6.66Zm7.5-5.83a1.66 1.66 0 1 0 0 3.33 1.66 1.66 0 0 0 0-3.33Z"
+          ></path>
+        </svg>
+      </a>
+
+      <Button href="/contact" variant="primary" size="md">
+        Me contacter
+      </Button>
+    </div>
+
+    <!-- BOUTON BURGER (Mobile uniquement) -->
+    <button
+      type="button"
+      id="burgerToggle"
+      class="vd-burger-btn"
+      aria-label="Menu principal"
+    >
+      <span class="burger-bar"></span>
+      <span class="burger-bar"></span>
+      <span class="burger-bar"></span>
+    </button>
+  </div>
+
+  <!-- TIROIR / MENU MOBILE SLIDE-DOWN -->
+  <div id="mobileDrawer" class="vd-mobile-drawer">
+    <div class="vd-drawer-inner">
+      <a href="/" class="vd-mobile-link">Accueil</a>
+
+      <div class="vd-mobile-accordion">
+        <div class="vd-accordion-title">
+          <span>Offres & Services</span>
+          <span class="vd-tag-new">Nouveau !</span>
+        </div>
+        <div class="vd-mobile-sublist">
+          <a href="/massages-soins" class="vd-mobile-sublink">
+            🌸 Soins & Massages
+          </a>
+          <a href="/formations-massotherapie" class="vd-mobile-sublink">
+            🎓 Formations Présentielles
+          </a>
+          <a
+            href="/formations-distance"
+            class="vd-mobile-sublink vd-sub-highlight"
+          >
+            💻 Formations en Ligne (E-learning)
+          </a>
+        </div>
+      </div>
+
+      <a href="/a-propos-massotherapeute-virginiedelayer" class="vd-mobile-link"
+        >Ma Démarche</a
+      >
+
+      <hr class="vd-drawer-divider" />
+
+      <div class="vd-mobile-actions">
+        <Button
+          href="/contact"
+          variant="primary"
+          size="lg"
+          style="width: 100%;"
+        >
+          Me contacter
+        </Button>
+
+        <a
+          href="https://www.instagram.com/virginiedelayerbienetre"
+          target="_blank"
+          rel="noopener"
+          class="vd-mobile-insta"
+        >
+          <svg viewBox="0 0 40 40" width="20" height="20">
+            <path
+              fill="#882454"
+              d="M26.66 5a8.33 8.33 0 0 1 8.33 8.33v13.33a8.33 8.33 0 0 1-8.33 8.33H13.33a8.33 8.33 0 0 1-8.33-8.33V13.33a8.33 8.33 0 0 1 8.33-8.33h13.33Zm-6.66 8.33a6.66 6.66 0 1 0 0 13.33 6.66 6.66 0 0 0 0-13.33Zm0 3.33a3.33 3.33 0 1 1 0 6.66 3.33 3.33 0 0 1 0-6.66Zm7.5-5.83a1.66 1.66 0 1 0 0 3.33 1.66 1.66 0 0 0 0-3.33Z"
+            ></path>
+          </svg>
+          <span>Suivez-moi sur Instagram</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script is:inline>
+  const burgerToggle = document.getElementById("burgerToggle");
+  const mobileDrawer = document.getElementById("mobileDrawer");
+
+  burgerToggle?.addEventListener("click", () => {
+    burgerToggle.classList.toggle("is-active");
+    mobileDrawer?.classList.toggle("is-open");
+  });
+</script>
+
+<style>
+  /* Header Fixe Glassmorphism */
+  header.vd-header {
+    position: sticky !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    height: 80px !important;
+    z-index: 999999 !important;
+    backdrop-filter: blur(14px) !important;
+    -webkit-backdrop-filter: blur(14px) !important;
+    background: radial-gradient(
+      ellipse farthest-corner at 10% 10%,
+      rgba(255, 248, 253, 0.88),
+      rgba(245, 244, 252, 0.72),
+      rgba(255, 255, 255, 0.6)
+    ) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.75) !important;
+    box-shadow: 0 4px 25px rgba(158, 107, 138, 0.08) !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+
+  .vd-nav-container {
+    width: 100% !important;
+    padding: 0 3rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    box-sizing: border-box !important;
+  }
+
+  .vd-nav-left {
+    display: flex !important;
+    align-items: center !important;
+  }
+
+  .vd-brand-logo {
+    font-family: "Nicholas", serif !important;
+    font-size: 1.8rem !important;
+    font-weight: 300 !important;
+    text-decoration: none !important;
+    white-space: nowrap !important;
+    line-height: 1 !important;
+    letter-spacing: 0.03em !important;
+    background: linear-gradient(180deg, #4f2613 0%, #882454 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    opacity: 0.9;
+  }
+
+  .vd-brand-logo:hover {
+    opacity: 0.8 !important;
+  }
+
+  /* DESKTOP PAR DÉFAUT (> 900px) */
+  .vd-nav-center {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 2.5rem !important;
+  }
+
+  .vd-nav-right {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 1.5rem !important;
+  }
+
+  /* BURGER & DRAWER CACHÉS PAR DÉFAUT SUR ORDI */
+  #burgerToggle.vd-burger-btn {
+    display: none !important;
+  }
+
+  #mobileDrawer.vd-mobile-drawer {
+    display: none !important;
+  }
+
+  .vd-link {
+    color: #333333 !important;
+    text-decoration: none !important;
+    font-size: 0.95rem !important;
+    font-weight: 500 !important;
+    transition: color 0.2s !important;
+  }
+
+  .vd-link:hover {
+    color: #882454 !important;
+  }
+
+  /* Dropdown Desktop */
+  .vd-dropdown {
+    position: relative !important;
+    display: inline-block !important;
+  }
+
+  .vd-dropdown-btn {
+    background: transparent !important;
+    border: none !important;
+    font-size: 0.95rem !important;
+    font-weight: 500 !important;
+    color: #333333 !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.45rem !important;
+    padding: 0.5rem 0 !important;
+    font-family: inherit !important;
+  }
+
+  .vd-pulse-wrapper {
+    position: relative !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 9px !important;
+    height: 9px !important;
+  }
+
+  .vd-pulse-core {
+    width: 7px !important;
+    height: 7px !important;
+    background: linear-gradient(135deg, #882454, #d67e60) !important;
+    border-radius: 50% !important;
+    z-index: 2 !important;
+  }
+
+  .vd-pulse-glow {
+    position: absolute !important;
+    width: 15px !important;
+    height: 15px !important;
+    background: rgba(214, 126, 96, 0.5) !important;
+    border-radius: 50% !important;
+    animation: softPulse 2s infinite ease-in-out !important;
+    z-index: 1 !important;
+  }
+
+  @keyframes softPulse {
+    0% {
+      transform: scale(0.6);
+      opacity: 0.9;
+    }
+    50% {
+      transform: scale(1.4);
+      opacity: 0.3;
+    }
+    100% {
+      transform: scale(1.8);
+      opacity: 0;
+    }
+  }
+
+  .vd-chevron {
+    transition: transform 0.2s !important;
+  }
+
+  .vd-dropdown:hover .vd-chevron {
+    transform: rotate(180deg) !important;
+  }
+
+  .vd-dropdown-menu {
+    display: none !important;
+    position: absolute !important;
+    top: 100% !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 371px !important;
+    background: rgba(255, 255, 255, 0.97) !important;
+    backdrop-filter: blur(16px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.9) !important;
+    border-radius: 16px !important;
+    padding: 0.75rem !important;
+    box-shadow: 0 12px 35px rgba(136, 36, 84, 0.15) !important;
+    z-index: 1000000 !important;
+  }
+
+  .vd-dropdown:hover .vd-dropdown-menu {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.35rem !important;
+  }
+
+  .vd-dropdown-item {
+    text-decoration: none !important;
+    padding: 0.75rem 1rem !important;
+    border-radius: 10px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    text-align: left !important;
+  }
+
+  .vd-dropdown-item:hover {
+    background: rgba(214, 126, 96, 0.12) !important;
+  }
+
+  .vd-item-featured {
+    background: rgba(136, 36, 84, 0.04) !important;
+    border: 1px dashed rgba(136, 36, 84, 0.25) !important;
+  }
+
+  .vd-item-header {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 12px !important;
+  }
+
+  .vd-item-title {
+    color: #4f2613 !important;
+    font-size: 0.95rem !important;
+    font-weight: 600 !important;
+  }
+
+  .vd-tag-new {
+    font-size: 0.7rem !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    padding: 0.25rem 0.65rem !important;
+    background: linear-gradient(135deg, #882454, #d67e60) !important;
+    color: #ffffff !important;
+    border-radius: 9999px !important;
+  }
+
+  .vd-item-sub {
+    color: #666666 !important;
+    font-size: 0.8rem !important;
+    margin-top: 0.25rem !important;
+  }
+
+  .vd-insta {
+    display: flex !important;
+    align-items: center !important;
+    opacity: 0.75 !important;
+  }
+
+  /* Style du Burger Button */
+  .vd-burger-btn {
+    background: transparent !important;
+    border: none !important;
+    cursor: pointer !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    width: 28px !important;
+    height: 20px !important;
+    padding: 0 !important;
+    z-index: 1000001 !important;
+  }
+
+  .burger-bar {
+    width: 100% !important;
+    height: 2.5px !important;
+    background-color: #4f2613 !important;
+    border-radius: 4px !important;
+    transition: all 0.3s ease !important;
+  }
+
+  .vd-burger-btn.is-active .burger-bar:nth-child(1) {
+    transform: translateY(8.5px) rotate(45deg) !important;
+  }
+  .vd-burger-btn.is-active .burger-bar:nth-child(2) {
+    opacity: 0 !important;
+  }
+  .vd-burger-btn.is-active .burger-bar:nth-child(3) {
+    transform: translateY(-8.5px) rotate(-45deg) !important;
+  }
+
+  /* Style du Tiroir Mobile */
+  .vd-mobile-drawer {
+    position: fixed !important;
+    top: 80px !important;
+    left: 0 !important;
+    right: 0 !important;
+    background: rgba(255, 252, 254, 0.98) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border-bottom: 1px solid rgba(136, 36, 84, 0.12) !important;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08) !important;
+    max-height: 0 !important;
+    overflow: hidden !important;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    z-index: 999998 !important;
+  }
+
+  .vd-mobile-drawer.is-open {
+    max-height: 500px !important;
+  }
+
+  .vd-drawer-inner {
+    padding: 1.5rem 2rem 2rem 2rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1.25rem !important;
+  }
+
+  .vd-mobile-link {
+    font-size: 1.1rem !important;
+    font-weight: 600 !important;
+    color: #4f2613 !important;
+    text-decoration: none !important;
+  }
+
+  .vd-mobile-accordion {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.5rem !important;
+  }
+
+  .vd-accordion-title {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    font-size: 1.1rem !important;
+    font-weight: 600 !important;
+    color: #4f2613 !important;
+  }
+
+  .vd-mobile-sublist {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.5rem !important;
+    padding-left: 0.75rem !important;
+    margin-top: 0.25rem !important;
+  }
+
+  .vd-mobile-sublink {
+    font-size: 0.95rem !important;
+    color: #555555 !important;
+    text-decoration: none !important;
+    padding: 0.4rem 0.6rem !important;
+    border-radius: 8px !important;
+  }
+
+  .vd-sub-highlight {
+    background: rgba(136, 36, 84, 0.06) !important;
+    color: #882454 !important;
+    font-weight: 600 !important;
+  }
+
+  .vd-drawer-divider {
+    border: none !important;
+    border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
+    margin: 0.5rem 0 !important;
+  }
+
+  .vd-mobile-actions {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1rem !important;
+    align-items: center !important;
+  }
+
+  .vd-mobile-insta {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+    font-size: 0.9rem !important;
+    color: #882454 !important;
+    text-decoration: none !important;
+    font-weight: 500 !important;
+  }
+
+  /* MEDIA QUERY EXPLICITE POUR MOBILE (< 900px) */
+  @media (max-width: 900px) {
+    .vd-nav-center {
+      display: none !important;
+    }
+    .vd-nav-right {
+      display: none !important;
+    }
+    #burgerToggle.vd-burger-btn {
+      display: flex !important;
+    }
+    #mobileDrawer.vd-mobile-drawer {
+      display: block !important;
+    }
+    .vd-nav-container {
+      padding: 0 1.5rem !important;
+    }
+  }
+</style>

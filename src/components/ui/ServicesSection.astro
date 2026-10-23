@@ -1,0 +1,118 @@
+---
+import ServiceCard from "./ServiceCard.astro";
+
+interface ServiceItem {
+  id: string;
+  data: {
+    title: string;
+    duree?: string;
+    prix?: string | number;
+    resume?: string;
+  };
+}
+
+interface Props {
+  title?: string;
+  subtitle?: string;
+  items?: ServiceItem[];
+  basePath?: string; // Prop ajoutée
+  class?: string;
+}
+
+const {
+  title = "Mes différents Massages",
+  subtitle = "Votre bien-être est ma priorité. Chaque séance est une invitation à lâcher prise, à se reconnecter avec soi, et à vivre une transformation positive.",
+  items = [],
+  basePath = "/soins", // Valeur par défaut si non spécifié
+  class: className = "",
+} = Astro.props;
+
+// Nettoyage de basePath pour éviter les doubles slashes (ex: /soins/ au lieu de /soins)
+const cleanBasePath = basePath.endsWith("/") ? basePath.slice(0, -1) : basePath;
+---
+
+<section class={`vd-services-section ${className}`}>
+  <div class="vd-services-container">
+    <!-- En-tête centré -->
+    <div class="vd-services-header">
+      <h2 class="vd-services-title">{title}</h2>
+      {subtitle && <p class="vd-services-subtitle">{subtitle}</p>}
+    </div>
+
+    <!-- Pile verticale des cartes -->
+    <div class="vd-services-list">
+      {
+        items.map((item) => (
+          <ServiceCard
+            title={item.data.title}
+            duree={item.data.duree}
+            prix={item.data.prix}
+            resume={item.data.resume}
+            href={`${cleanBasePath}/${item.id}`}
+          />
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .vd-services-section {
+    width: 100% !important;
+    padding: 5rem 1.5rem !important;
+    box-sizing: border-box !important;
+  }
+
+  .vd-services-container {
+    max-width: 820px !important;
+    margin: 0 auto !important;
+  }
+
+  .vd-services-header {
+    text-align: center !important;
+    margin-bottom: 3rem !important;
+  }
+
+  /* Titre Principal en Nicholas */
+  .vd-services-title {
+    font-family: "Nicholas", "AlexBrushRegular", serif !important;
+    font-size: 2.75rem !important;
+    color: #4f2613 !important;
+    font-weight: 300 !important;
+    line-height: 1.2 !important;
+    margin: 0 0 0.75rem 0 !important;
+  }
+
+  /* Sous-titre léger */
+  .vd-services-subtitle {
+    font-size: 0.9rem !important;
+    color: #666666 !important;
+    font-weight: 300 !important;
+    line-height: 1.65 !important;
+    max-width: 680px !important;
+    margin: 0 auto !important;
+  }
+
+  /* Liste empilée */
+  .vd-services-list {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1.25rem !important;
+    width: 100% !important;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .vd-services-section {
+      padding: 3.5rem 1.25rem !important;
+    }
+
+    .vd-services-title {
+      font-size: 2.15rem !important;
+    }
+
+    .vd-services-subtitle {
+      font-size: 0.85rem !important;
+    }
+  }
+</style>

@@ -1,0 +1,33 @@
+{
+  "title": "Aux Bols Tibétains",
+  "subtitle": "Sonothérapie relaxante et soin énergétique vibrant",
+  "metaTitle": "Soin aux Bols Tibétains - Massage Sonore & Vibratoire",
+  "metaDescription": "Profitez d'un soin sonore aux bols tibétains. Les vibrations des bols et le massage doux apaisent le système nerveux et harmonisent les énergies.",
+  "duree": "1h30",
+  "prix": "90",
+  "resume": "Sonothérapie relaxante et rééquilibrage vibratoire",
+  "content": "Un soin énergétique qui utilise les vibrations et sonorités des bols tibétains, accompagné d'un doux massage du corps, pour stimuler les méridiens et promouvoir l'autoguérison.",
+  "targetAudience": [
+    "Personnes sujettes au stress, aux insomnies ou à l'anxiété",
+    "Ressenti de tensions nerveuses et musculaires persistantes",
+    "En quête d'une expérience méditative et vibratoire unique"
+  ],
+  "benefits": [
+    "Lâcher-prise total et apaisement du système nerveux",
+    "Réduction notable du stress et amélioration du sommeil",
+    "Harmonisation corps-esprit et soulagement des douleurs"
+  ],
+  "faq": [
+    {
+      "question": "Comment se déroule une séance de soin aux bols tibétains ?",
+      "answer": "La séance combine un massage doux et le dépôt des bols chantants sur ou autour du corps habillé ou dévêtu selon le protocole. Les vibrations se diffusent dans tout le corps pour une profonde relaxation."
+    },
+    {
+      "question": "Faut-il prévoir une tenue particulière ?",
+      "answer": "Privilégiez une tenue souple et confortable dans laquelle vous vous sentez à l'aise pour profiter pleinement du moment d'intégration."
+    }
+  ],
+  "featured": false,
+  "isNew": false,
+  "draft": false
+}

@@ -1,0 +1,149 @@
+---
+import { getCollection } from "astro:content";
+import MainLayout from "../../layouts/MainLayout.astro";
+import CalloutSection from "../../components/ui/CalloutSection.astro";
+
+// Import des composants réutilisables
+import SoinHero from "../../components/sections/SoinHero.astro";
+import SoinAbout from "../../components/sections/SoinAbout.astro";
+import SoinFeatures from "../../components/sections/SoinFeatures.astro";
+import SoinFaq from "../../components/sections/SoinFaq.astro";
+import SoinNavBottom from "../../components/sections/SoinNavBottom.astro";
+
+// 1. Génération des routes statiques
+export async function getStaticPaths() {
+  const soins = await getCollection("soins", ({ data }) => !data.draft);
+  return soins.map((soin, index) => {
+    const prevSoin = soins[index === 0 ? soins.length - 1 : index - 1];
+    const nextSoin = soins[index === soins.length - 1 ? 0 : index + 1];
+
+    const slugKey = soin.slug || soin.id;
+
+    return {
+      params: { slug: slugKey },
+      props: { soin, prevSoin, nextSoin },
+    };
+  });
+}
+
+const { soin, prevSoin, nextSoin } = Astro.props;
+
+// Propriétés JSON
+const {
+  title,
+  subtitle,
+  duree,
+  prix,
+  resume,
+  content,
+  benefits = [],
+  targetAudience = [],
+  faq = [],
+  categorie = "Soin Énergétique & Bien-être",
+} = soin.data;
+
+const prevRef = {
+  slug: prevSoin.slug || prevSoin.id,
+  title: prevSoin.data.title,
+};
+
+const nextRef = {
+  slug: nextSoin.slug || nextSoin.id,
+  title: nextSoin.data.title,
+};
+
+// SEO Schema.org
+const schemaBreadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Accueil",
+      item: "https://virginie-delayer.com",
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Massages & Soins",
+      item: "https://virginie-delayer.com/massages-soins",
+    },
+    {
+      "@type": "ListItem",
+      position: 3,
+      name: title,
+      item: `https://virginie-delayer.com/soins/${soin.slug || soin.id}`,
+    },
+  ],
+};
+
+const schemaSoin = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: title,
+  provider: {
+    "@type": "HealthAndBeautyBusiness",
+    name: "Virginie Delayer - Massothérapie & Soins Énergétiques",
+  },
+  description: resume || subtitle,
+  offers: {
+    "@type": "Offer",
+    price: prix,
+    priceCurrency: "EUR",
+  },
+};
+---
+
+<MainLayout
+  title={`${title} | Massages & Soins Énergétiques | Virginie Delayer`}
+  description={resume || subtitle}
+  bodyId="detail-soin"
+>
+  <!-- SEO JSON-LD -->
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify(schemaBreadcrumb)}
+  />
+  <script type="application/ld+json" set:html={JSON.stringify(schemaSoin)} />
+
+  <!-- 1. Hero Section -->
+  <SoinHero
+    title={title}
+    parentTitle="Massages & Soins"
+    parentHref="/massages-soins"
+    categorie={categorie}
+    duree={duree}
+    prix={prix}
+    description={resume || subtitle}
+    reservationLink="/contact"
+  />
+
+  <!-- 2. À propos -->
+  <SoinAbout content={content} />
+
+  <!-- 3. Bienfaits & Pour qui ? -->
+  <SoinFeatures benefits={benefits} targetAudience={targetAudience} />
+
+  <!-- 4. FAQ -->
+  <SoinFaq faq={faq} />
+
+  <!-- 5. Navigation Précédent / Suivant -->
+  <SoinNavBottom
+    prevItem={prevRef}
+    nextItem={nextRef}
+    basePath="/soins"
+    labelPrev="Soin précédent"
+    labelNext="Soin suivant"
+  />
+
+  <!-- 6. Callout Contact Final (Version Bateau Origami) -->
+  <CalloutSection
+    variant="boat"
+    tagline="Me contacter"
+    title="Prêt à vous lancer ?"
+    description="Souhaitez-vous discuter de vos besoins en bien-être ou réserver votre séance à domicile sur Lyon et ses environs ? Je suis à votre écoute."
+    buttonText="Me contacter"
+    buttonHref="/contact"
+  />
+</MainLayout>

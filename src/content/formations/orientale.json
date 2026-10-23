@@ -1,0 +1,39 @@
+{
+  "title": "Orientale",
+  "subtitle": "Détente sensorielle et lâcher-prise inspiré des traditions",
+  "metaTitle": "Formation Massage Oriental en Présentiel",
+  "metaDescription": "Apprenez le massage oriental traditionnel. Rituel doux et enveloppant favorisant l'apaisement du mental et la détente sensorielle.",
+  "duree": "1 jour",
+  "prix": "240",
+  "targetAudience": [
+    "Praticiens en institut ou spa souhaitant proposer un rituel cocooning et chaleureux",
+    "Masseurs voulant maîtriser les mouvements enveloppants traditionnels",
+    "Toute personne attirée par l'univers des soins du hammam et la détente absolue"
+  ],
+  "prerequis": "Accessible à tous",
+  "resume": "Détente sensorielle et lâcher-prise",
+  "content": "La formation en massage orientale invite à découvrir un rituel inspiré des traditions ancestrales, favorisant la détente du corps et de l’esprit. Ce massage, à la fois doux et enveloppant, utilise des mouvements fluides et rythmés pour relâcher les tensions et apaiser le mental.",
+  "programme": [
+    "Maîtrise des mouvements enveloppants et fluides",
+    "Techniques de relaxation inspirées du hammam et des rituels d'orient",
+    "Création d'une ambiance sensorielle globale"
+  ],
+  "benefits": [
+    "Détente physique et apaisement total du mental",
+    "Expérience sensorielle enveloppante",
+    "Bien-être et lâcher-prise immédiats"
+  ],
+  "faq": [
+    {
+      "question": "Apprend-on l'utilisation de produits spécifiques pendant la formation ?",
+      "answer": "Nous abordons l'univers du soin oriental, l'utilisation des huiles et la création d'une atmosphère chaleureuse propice au lâcher-prise."
+    },
+    {
+      "question": "La formation est-elle certifiante ?",
+      "answer": "Oui, vous recevez un certificat de réalisation à l'issue de la journée."
+    }
+  ],
+  "featured": false,
+  "isNew": false,
+  "draft": false
+}

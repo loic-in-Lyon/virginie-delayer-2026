@@ -1,0 +1,166 @@
+---
+import Button from "./Button.astro";
+import bateauImg from "../../assets/about-avenir-bg.webp"; // Adapte le chemin selon ton asset
+
+interface Props {
+  tagline?: string;
+  title: string;
+  description?: string;
+  buttonText: string;
+  buttonHref: string;
+  variant?: "boat" | "neutral";
+  bgImage?: string;
+}
+
+const {
+  tagline = "Me contacter",
+  title,
+  description,
+  buttonText,
+  buttonHref,
+  variant = "neutral",
+  bgImage = bateauImg.src,
+} = Astro.props;
+
+// Nettoyage des accents pour la police Priestacy
+function removeAccents(str: string) {
+  if (!str) return "";
+  return str
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/œ/g, "oe")
+    .replace(/Œ/g, "OE");
+}
+
+const cleanTagline = removeAccents(tagline);
+const cleanTitle = removeAccents(title);
+---
+
+<section class={`vd-callout-section vd-callout-${variant}`}>
+  <!-- Image de fond bateau si variant="boat" -->
+  {
+    variant === "boat" && bgImage && (
+      <div class="vd-callout-bg">
+        <img src={bgImage} alt="" class="vd-callout-img" />
+        <div class="vd-callout-overlay" />
+      </div>
+    )
+  }
+
+  <!-- Contenu directement fondu (sans carte) -->
+  <div class="vd-callout-container">
+    <div class="vd-callout-content">
+      {tagline && <span class="vd-callout-tagline">{cleanTagline}</span>}
+      <h2 class="vd-callout-title">{cleanTitle}</h2>
+
+      {description && <p class="vd-callout-desc">{description}</p>}
+
+      <div class="vd-callout-action">
+        <Button href={buttonHref} size="lg">
+          {buttonText}
+        </Button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .vd-callout-section {
+    position: relative !important;
+    width: 100% !important;
+    padding: 5.5rem 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Variant Neutre */
+  .vd-callout-neutral {
+    background-color: #faf5f7 !important;
+  }
+
+  /* Variant Bateau */
+  .vd-callout-boat {
+    background-color: #faf5f7 !important;
+  }
+
+  .vd-callout-bg {
+    position: absolute !important;
+    inset: 0 !important;
+    z-index: 1 !important;
+  }
+
+  .vd-callout-img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center !important;
+  }
+
+  .vd-callout-overlay {
+    position: absolute !important;
+    inset: 0 !important;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.7) 0%,
+      rgba(253, 248, 250, 0.85) 100%
+    ) !important;
+    backdrop-filter: blur(1px) !important;
+  }
+
+  /* Conteneur texte (Aérien & Sans Fond) */
+  .vd-callout-container {
+    position: relative !important;
+    z-index: 2 !important;
+    max-width: 820px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+    padding: 0 1.5rem !important;
+  }
+
+  .vd-callout-content {
+    text-align: center !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  .vd-callout-tagline {
+    font-family: "Priestacy", cursive !important;
+    font-size: 1.6rem !important;
+    color: #882454 !important;
+    margin-bottom: 0.25rem !important;
+    display: block !important;
+  }
+
+  .vd-callout-title {
+    font-family: "Nicholas", serif !important;
+    font-size: 2.65rem !important;
+    color: #4f2613 !important;
+    margin: 0 0 1rem 0 !important;
+    font-weight: 300 !important;
+    line-height: 1.2 !important;
+  }
+
+  .vd-callout-desc {
+    font-size: 0.95rem !important;
+    line-height: 1.75 !important;
+    color: #555555 !important;
+    font-weight: 300 !important;
+    max-width: 640px !important;
+    margin: 0 0 2rem 0 !important;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8) !important;
+  }
+
+  @media (max-width: 640px) {
+    .vd-callout-section {
+      padding: 4rem 0 !important;
+    }
+
+    .vd-callout-title {
+      font-size: 2.1rem !important;
+    }
+  }
+</style>

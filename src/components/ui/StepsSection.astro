@@ -1,0 +1,159 @@
+---
+import GlassCard from "./GlassCard.astro";
+
+interface StepItem {
+  number?: string;
+  title: string;
+  description: string;
+}
+
+interface Props {
+  title?: string;
+  subtitle?: string;
+  steps?: StepItem[];
+  bgImage?: string;
+  class?: string;
+}
+
+const defaultSteps: StepItem[] = [
+  {
+    number: "1",
+    title: "Préparation Personnalisée",
+    description:
+      "Avant de commencer, nous discutons de vos besoins spécifiques pour personnaliser la séance.",
+  },
+  {
+    number: "2",
+    title: "Installation Confortable",
+    description:
+      "Je prépare l'espace avec tout le nécessaire pour une expérience optimale – table de massage, huiles, musique douce.",
+  },
+  {
+    number: "3",
+    title: "Déroulement",
+    description:
+      "Selon le massage choisi, je pratique des techniques spécifiques – massages, soins énergétiques, sonothérapie – qui visent à équilibrer votre corps et votre esprit.",
+  },
+  {
+    number: "4",
+    title: "Détente et Récupération",
+    description:
+      "Après le modelage, je vous laisse un moment pour vous reposer et intégrer pleinement les bienfaits de la séance.",
+  },
+];
+
+const {
+  title = "Déroulement d’une séance",
+  subtitle = "Un accompagnement progressif pour vous amener vers la détente et le lâcher-prise.",
+  steps = defaultSteps,
+  bgImage,
+  class: className = "",
+} = Astro.props;
+---
+
+<section class={`vd-steps-section ${className}`}>
+  <!-- Arrière-plan floral si fourni -->
+  {
+    bgImage && (
+      <div class="vd-steps-bg">
+        <img src={bgImage} alt="" class="vd-steps-img" />
+      </div>
+    )
+  }
+
+  <div class="vd-steps-container">
+    <!-- En-tête centré -->
+    <div class="vd-steps-header">
+      <h2 class="vd-steps-title">{title}</h2>
+      {subtitle && <p class="vd-steps-subtitle">{subtitle}</p>}
+    </div>
+
+    <!-- Grille des 4 cartes Glassmorphism -->
+    <div class="vd-steps-grid">
+      {
+        steps.map((step) => (
+          <GlassCard
+            number={step.number}
+            title={step.title}
+            description={step.description}
+          />
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .vd-steps-section {
+    position: relative !important;
+    padding: 6rem 1.5rem !important;
+    width: 100% !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Arrière-plan */
+  .vd-steps-bg {
+    position: absolute !important;
+    inset: 0 !important;
+    z-index: 1 !important;
+    opacity: 0.35 !important;
+    pointer-events: none !important;
+  }
+
+  .vd-steps-img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center !important;
+  }
+
+  .vd-steps-container {
+    position: relative !important;
+    z-index: 2 !important;
+    max-width: 1050px !important;
+    margin: 0 auto !important;
+    text-align: center !important;
+  }
+
+  /* Titre Principal en Nicholas */
+  .vd-steps-title {
+    font-family: "Nicholas", "AlexBrushRegular", serif !important;
+    font-size: 2.75rem !important;
+    color: #4f2613 !important;
+    font-weight: 300 !important;
+    line-height: 1.2 !important;
+    margin: 0 0 0.5rem 0 !important;
+  }
+
+  /* Sous-titre léger */
+  .vd-steps-subtitle {
+    font-size: 0.95rem !important;
+    color: #666666 !important;
+    font-weight: 300 !important;
+    margin: 0 0 3.5rem 0 !important;
+  }
+
+  /* Grille 2 x 2 */
+  .vd-steps-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 2rem !important;
+  }
+
+  /* Responsive */
+  @media (max-width: 820px) {
+    .vd-steps-grid {
+      grid-template-columns: 1fr !important;
+      gap: 1.25rem !important;
+    }
+
+    .vd-steps-title {
+      font-size: 2.15rem !important;
+    }
+
+    .vd-steps-section {
+      padding: 4rem 1.25rem !important;
+    }
+  }
+</style>

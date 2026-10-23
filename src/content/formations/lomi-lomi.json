@@ -1,0 +1,39 @@
+{
+  "title": "Lomi Lomi",
+  "subtitle": "Massage hawaïen pour l'harmonie et la relaxation",
+  "metaTitle": "Formation Massage Lomi Lomi en Présentiel",
+  "metaDescription": "Maîtrisez le massage hawaïen Lomi Lomi en formation présentielle. Longs mouvements fluides, détente profonde et technique professionnelle.",
+  "duree": "1 jour",
+  "prix": "280",
+  "targetAudience": [
+    "Masseurs et masseuses souhaitant proposer un soin corporel fluide et enveloppant",
+    "Esthéticiennes et praticiens du bien-être en quête de techniques hawaïennes",
+    "Toute personne passionnée par les massages du monde"
+  ],
+  "prerequis": "Ouvert à tous les passionnés de bien-être",
+  "resume": "Massage hawaïen pour l'harmonie et la relaxation",
+  "content": "Participez à notre formation en massage Lomi Lomi, une technique hawaïenne unique et profondément enrichissante. Le Lomi Lomi est un massage à la fois fluide et enveloppant, mêlant douceur et dynamismme. Il est reconnu pour ses longs mouvements fluides qui couvrent plusieurs parties du corps simultanément, évoquant la sensation apaisante des vagues de l'océan.",
+  "programme": [
+    "Technique de massage avec les avants-bras",
+    "Mouvements fluides, amples et rythmés",
+    "Étirements doux et connexion au corps"
+  ],
+  "benefits": [
+    "Apprentissage d'une technique hawaïenne authentique",
+    "Maîtrise des mouvements amples avec les avant-bras",
+    "Base solide pour une pratique experte"
+  ],
+  "faq": [
+    {
+      "question": "Le travail avec les avant-bras n'est-il pas trop physique ?",
+      "answer": "La formation met l'accent sur le transfert de poids du corps pour effectuer des mouvements fluides sans se fatiguer les bras ou le dos."
+    },
+    {
+      "question": "Combien de temps dure la formation ?",
+      "answer": "La formation se déroule sur une journée complète de pratique intensive."
+    }
+  ],
+  "featured": false,
+  "isNew": false,
+  "draft": false
+}

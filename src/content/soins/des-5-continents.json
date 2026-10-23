@@ -1,0 +1,34 @@
+{
+  "title": "Des 5 Continents",
+  "subtitle": "Soin biodynamique et rééquilibrage énergétique",
+  "metaTitle": "Soin Massage des 5 Continents - Énergie & Lâcher Prise",
+  "metaDescription": "Découvrez le soin des 5 continents : un massage énergétique complet combinant Reiki, huiles essentielles et techniques de massages du monde.",
+  "duree": "1h30",
+  "prix": "80",
+  "resume": "Équilibre énergétique et massage des 5 continents",
+  "content": "Un soin énergétique combinant Reiki et/ou Magnétisme avec des massages de cultures variées (lomi lomi, californien, suédois, tuina, ayurvédique) et huiles essentielles. Il permet de faire circuler l'énergie vitale en douceur et d'harmoniser le corps et l'esprit.",
+  "targetAudience": [
+    "Personnes traversant une période de grande fatigue physique ou émotionnelle",
+    "Besoin d'un lâcher-prise profond et d'une détoxification du corps",
+    "Recherche d'un soin complet alliant massage corporel et énergie"
+  ],
+  "benefits": [
+    "Détente intense et lâcher-prise immédiat",
+    "Libération des toxines et stimulation de la circulation",
+    "Rééquilibrage des chakras et regain de vitalité",
+    "Renforcement du système immunitaire et confiance en soi"
+  ],
+  "faq": [
+    {
+      "question": "Qu'est-ce qui rend le massage des 5 continents si unique ?",
+      "answer": "Il associe des techniques de massages du monde entier (Lomi Lomi, Californien, Tuina, Ayurvédique, Suédois) avec de l'énergie (Reiki/Magnétisme) et des préparations d'huiles essentielles ciblées."
+    },
+    {
+      "question": "Y a-t-il des contre-indications liées aux huiles essentielles ?",
+      "answer": "Le soin utilisant des huiles essentielles spécifiques, il est déconseillé aux femmes enceintes ou allaitantes ainsi qu'aux personnes ayant des allergies sévères."
+    }
+  ],
+  "featured": false,
+  "isNew": false,
+  "draft": false
+}

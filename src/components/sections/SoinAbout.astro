@@ -1,0 +1,89 @@
+---
+interface Props {
+  content?: string;
+  title?: string;
+}
+
+const { content, title = "À propos de ce soin" } = Astro.props;
+
+// Nettoyage des accents pour la police Priestacy
+function removeAccents(str: string) {
+  if (!str) return "";
+  return str
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/œ/g, "oe")
+    .replace(/Œ/g, "OE");
+}
+
+const cleanTitle = removeAccents(title);
+---
+
+{
+  content && (
+    <section class="vd-about-section">
+      <div class="vd-section-container">
+        <div class="vd-glass-card vd-about-card">
+          <h2 class="vd-about-title">{cleanTitle}</h2>
+          <p class="vd-about-text">{content}</p>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .vd-about-section {
+    padding: 2.5rem 0 1.5rem 0 !important;
+    width: 100% !important;
+  }
+
+  .vd-section-container {
+    max-width: 820px !important;
+    margin: 0 auto !important;
+    padding: 0 1.5rem !important;
+    box-sizing: border-box !important;
+  }
+
+  .vd-glass-card {
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.95) !important;
+    border-radius: 20px !important;
+    box-shadow:
+      0 8px 25px rgba(136, 36, 84, 0.03),
+      inset 0 1px 1px rgba(255, 255, 255, 1) !important;
+  }
+
+  .vd-about-card {
+    padding: 2.25rem 2.75rem !important;
+    text-align: left !important;
+  }
+
+  .vd-about-title {
+    font-family: "Priestacy", "AlexBrushRegular", cursive !important;
+    font-size: 2.25rem !important;
+    color: #4f2613 !important;
+    margin: 0 0 1rem 0 !important;
+    font-weight: 400 !important;
+  }
+
+  .vd-about-text {
+    font-size: 0.925rem !important;
+    line-height: 1.75 !important;
+    color: #555555 !important;
+    font-weight: 300 !important;
+    margin: 0 !important;
+  }
+
+  @media (max-width: 640px) {
+    .vd-about-card {
+      padding: 1.75rem 1.5rem !important;
+    }
+
+    .vd-about-title {
+      font-size: 1.85rem !important;
+    }
+  }
+</style>

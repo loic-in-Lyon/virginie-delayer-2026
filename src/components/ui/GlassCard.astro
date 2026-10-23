@@ -1,0 +1,74 @@
+---
+interface Props {
+  number?: string;
+  title: string;
+  description: string;
+  class?: string;
+}
+
+const { number, title, description, class: className = "" } = Astro.props;
+---
+
+<div class={`vd-glass-card ${className}`}>
+  {number && <span class="vd-glass-number">{number}.</span>}
+  <h3 class="vd-glass-title">{title}</h3>
+  <p class="vd-glass-description">{description}</p>
+</div>
+
+<style>
+  .vd-glass-card {
+    background: rgba(255, 255, 255, 0.68) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.85) !important;
+    border-radius: 20px !important;
+    padding: 2.25rem 2.5rem !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03) !important;
+    transition:
+      transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 0.35s ease !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    text-align: left !important;
+    box-sizing: border-box !important;
+  }
+
+  .vd-glass-card:hover {
+    transform: translateY(-3px) !important;
+    background: rgba(255, 255, 255, 0.78) !important;
+    box-shadow: 0 14px 35px rgba(136, 36, 84, 0.06) !important;
+  }
+
+  /* Numéro Manuscrit Italique (ex: 1.) */
+  .vd-glass-number {
+    font-family:
+      "AlexBrushRegular", "Priestacy", "Alex Brush", cursive !important;
+    font-size: 1.75rem !important;
+    font-style: italic !important;
+    color: #4f2613 !important;
+    opacity: 0.7 !important;
+    margin-bottom: 0.5rem !important;
+    line-height: 1 !important;
+  }
+
+  /* Titre de la carte en gras subtil */
+  .vd-glass-title {
+    font-family: inherit !important;
+    font-size: 1.05rem !important;
+    font-weight: 600 !important;
+    color: #4f2613 !important;
+    margin: 0 0 0.6rem 0 !important;
+    line-height: 1.3 !important;
+  }
+
+  /* Description fine et lisible */
+  .vd-glass-description {
+    font-family: inherit !important;
+    font-size: 0.875rem !important;
+    font-weight: 300 !important;
+    color: #555555 !important;
+    line-height: 1.6 !important;
+    margin: 0 !important;
+  }
+</style>

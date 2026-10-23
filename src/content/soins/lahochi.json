@@ -1,0 +1,33 @@
+{
+  "title": "Lahochi",
+  "subtitle": "Guérison énergétique et équilibrage par la lumière",
+  "metaTitle": "Soin Énergétique Lahochi - Harmonisation & Bien-être",
+  "metaDescription": "Découvrez le soin énergétique Lahochi par apposition des mains. Fréquences lumineuses pour accélérer la guérison et libérer le stress.",
+  "duree": "1h",
+  "prix": "50",
+  "resume": "Guérison énergétique et équilibrage par la lumière",
+  "content": "Le Lahochi est une technique de soin énergétique transmise par l'apposition des mains, utilisant des fréquences lumineuses pour la guérison et l'équilibrage des centres énergétiques.",
+  "targetAudience": [
+    "Toute personne ressentant un blocage ou un manque d'énergie",
+    "Périodes de transition de vie, de stress ou de fatigue",
+    "Enfants, adultes et personnes souffrant de douleurs chroniques"
+  ],
+  "benefits": [
+    "Nettoyage et harmonisation des chakras",
+    "Stimulation du système immunitaire et revitalisation",
+    "Sensation de paix intérieure et relaxation profonde"
+  ],
+  "faq": [
+    {
+      "question": "Comment fonctionne une séance de soin Lahochi ?",
+      "answer": "Le soin se pratique par apposition des mains sur 5 positions spécifiques du corps. Vous restez habillé(e) et allongé(e) sur la table de massage."
+    },
+    {
+      "question": "Que peut-on ressentir pendant un soin Lahochi ?",
+      "answer": "Certaines personnes ressentent des picotements doux, une sensation de chaleur agréable ou un état de relaxation très proche du sommeil."
+    }
+  ],
+  "featured": false,
+  "isNew": false,
+  "draft": false
+}

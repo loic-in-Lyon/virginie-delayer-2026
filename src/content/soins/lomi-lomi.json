@@ -1,0 +1,33 @@
+{
+  "title": "Lomi Lomi",
+  "subtitle": "Soin hawaïen enveloppant pour le corps et l'esprit",
+  "metaTitle": "Massage Lomi Lomi - Soin Hawaïen Relaxant",
+  "metaDescription": "Offrez-vous un massage Lomi Lomi ancestral. Mouvements fluides avec les avant-bras évoquant les vagues de l'océan pour une détente absolue.",
+  "duree": "1h",
+  "prix": "70",
+  "resume": "Technique hawaïenne pour l'harmonie et la relaxation",
+  "content": "Originaire d'Hawaï, cette pratique polynésienne relie le corps, le cœur et l'esprit. Il est effectué principalement avec les mains et les avant-bras, évoquant les vagues douces de l'océan.",
+  "targetAudience": [
+    "Personnes recherchant un massage à la fois dynamique et doux",
+    "Besoin de réconfort et de reconnexion corporelle",
+    "Sensation de fatigue musculaire et circulation ralentie"
+  ],
+  "benefits": [
+    "Amélioration de la circulation sanguine et lymphatique",
+    "Élimination des toxines et libération des tensions",
+    "Confort, réconfort et renforcement de l'estime de soi"
+  ],
+  "faq": [
+    {
+      "question": "Comment est effectué le massage Lomi Lomi ?",
+      "answer": "Le soin est réalisé principalement avec les avant-bras et les paumes de mains dans des mouvements longs, vifs et enveloppants rappelant le va-et-vient des vagues."
+    },
+    {
+      "question": "Quelle huile est utilisée pour ce soin ?",
+      "answer": "Une huile végétale chaude est appliquée généreusement pour garantir la fluidité et le confort des mouvements."
+    }
+  ],
+  "featured": false,
+  "isNew": false,
+  "draft": false
+}

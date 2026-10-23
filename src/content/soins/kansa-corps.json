@@ -1,0 +1,33 @@
+{
+  "title": "Kansa Corps",
+  "subtitle": "Soin holistique au bol en alliage de métaux Kansa",
+  "metaTitle": "Soin Massage Kansa Corps - Détente & Détoxification",
+  "metaDescription": "Découvrez le soin Kansa Corps. Massage indien associant bol de métaux sacrés et modelage manuel pour éliminer les toxines et apaiser le corps.",
+  "duree": "1h",
+  "prix": "70",
+  "resume": "Expérience sensorielle et équilibre énergétique",
+  "content": "Le massage Kansa Corps, utilisant un bol en alliage de métaux spécifiques, offre une expérience holistique de bien-être, favorisant la détente profonde, l'élimination des toxines et l'équilibre énergétique du corps.",
+  "targetAudience": [
+    "Personnes recherchant un soin corporel original et détoxifiant",
+    "Accumulation de fatigue physique et de stress",
+    "Tensions musculaires récurrentes"
+  ],
+  "benefits": [
+    "Relaxation musculaire profonde et soulagement des tensions",
+    "Stimulation de la circulation et élimination des toxines",
+    "Amélioration de la qualité du sommeil et calme mental"
+  ],
+  "faq": [
+    {
+      "question": "Qu'est-ce que le bol Kansa ?",
+      "answer": "C'est un bol traditionnel fabriqué dans un alliage de métaux sacrés (notamment le bronze) utilisé en médecine ayurvédique pour équilibrer le pH de la peau et éliminer les toxines."
+    },
+    {
+      "question": "Que ressent-on pendant le massage Kansa Corps ?",
+      "answer": "Une sensation de fraîcheur initiale suivie d'une douce chaleur vibratoire et d'un relâchement musculaire très rapide."
+    }
+  ],
+  "featured": false,
+  "isNew": false,
+  "draft": false
+}

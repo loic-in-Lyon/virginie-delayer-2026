@@ -1,0 +1,130 @@
+---
+import { getCollection } from "astro:content";
+import MainLayout from "../layouts/MainLayout.astro";
+
+// Importation des mêmes composants UI réutilisables
+import PageHero from "../components/ui/PageHero.astro";
+import ServiceIntro from "../components/ui/ServiceIntro.astro";
+import StepsSection from "../components/ui/StepsSection.astro";
+import ServicesSection from "../components/ui/ServicesSection.astro";
+import CalloutSection from "../components/ui/CalloutSection.astro";
+
+// Assets d'images de fond
+import heroFlowerImg from "../assets/heroFormations.webp";
+import bgFlowers from "../assets/deroulement.webp";
+
+// 1. Récupération dynamique de la collection Astro "formations-distance"
+const formationsDistance = await getCollection(
+  "formations-distance",
+  ({ data }) => !data.draft,
+);
+
+// 2. Les étapes de l'apprentissage E-Learning (pour la StepsSection)
+const stepsElearning = [
+  {
+    number: "1",
+    title: "Accès Immédiat & Illimité",
+    description:
+      "Accédez à votre espace de formation en ligne dès votre inscription et conservez vos accès à vie.",
+  },
+  {
+    number: "2",
+    title: "Apprentissage en Autonomie",
+    description:
+      "Visionnez les cours vidéo HD pas à pas et téléchargez vos livrets pédagogiques complets à votre rythme.",
+  },
+  {
+    number: "3",
+    title: "Pratique & Auto-évaluation",
+    description:
+      "Révisez les protocoles d'anatomie et validez vos acquis théoriques via des quiz d'évaluation.",
+  },
+  {
+    number: "4",
+    title: "Validation & Certification",
+    description:
+      "Soumettez votre évaluation pratique à Virginie pour valider vos compétences et recevoir votre certificat.",
+  },
+];
+
+// 3. SEO & Données Structurées JSON-LD
+const schemaFormationsDistance = {
+  "@context": "https://schema.org",
+  "@type": "EducationalOrganization",
+  name: "Virginie Delayer - Formations à Distance & E-Learning",
+  description:
+    "Formations en ligne aux massages bien-être et soins énergétiques avec accès illimité et certification.",
+  url: "https://virginie-delayer.com/formations-distance",
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Catalogue des Formations à Distance",
+    itemListElement: formationsDistance.map((item) => ({
+      "@type": "Offer",
+      itemOffered: {
+        "@type": "Course",
+        name: item.data.title,
+        description: item.data.resume,
+      },
+      price: item.data.prix,
+      priceCurrency: "EUR",
+    })),
+  },
+};
+---
+
+<MainLayout
+  title="Formations à Distance & E-Learning Massages Bien-être | Virginie Delayer"
+  description="Découvrez nos formations en ligne aux techniques de massages et soins énergétiques. Apprenez à votre rythme avec vidéos HD, supports PDF et certification."
+  bodyId="formations-distance"
+>
+  <!-- Schema.org JSON-LD -->
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify(schemaFormationsDistance)}
+  />
+
+  <!-- 1. HERO PAGE AVEC BADGE NOUVEAU -->
+  <PageHero
+    badge="Nouveau !"
+    title="Formations en Ligne"
+    subtitle="Développez vos compétences en massage et bien-être depuis chez vous, à votre rythme, grâce à une méthode pédagogique vidéo claire et certifiante."
+    ctaText="Me contacter"
+    ctaHref="/contact"
+    bgImage={heroFlowerImg.src}
+  />
+
+  <!-- 2. INTRO SERVICE -->
+  <ServiceIntro
+    tagline="Apprentissage en ligne"
+    title="Une methode flexible et accessible partout"
+    description="Profitez de transmissions complètes associant rigueur pédagogique, démonstrations vidéo détaillées et livrets de cours pas à pas. Que vous soyez en reconversion ou déjà praticien, formez-vous sans contrainte de déplacement."
+  />
+
+  <!-- 3. DÉROULEMENT / PÉDAGOGIE E-LEARNING -->
+  <StepsSection
+    title="Comment se deroule votre formation ?"
+    subtitle="Un parcours pédagogique structuré pour garantir la maîtrise parfaite des gestes et postures."
+    steps={stepsElearning}
+    bgImage={bgFlowers.src}
+  />
+
+  <!-- 4. CATALOGUE DES PROGRAMMES E-LEARNING -->
+  <ServicesSection
+    title="Mes Programmes E-Learning"
+    subtitle="Chaque formation inclut les accès vidéo illimités, les supports de cours en PDF, les quiz de validation et votre certificat de réalisation."
+    items={formationsDistance}
+    basePath="/formations-distance"
+  />
+
+  <!-- 5. CALLOUT CONTACT FINAL -->
+  <!-- Callout Contact Final (Version Bateau Origami) -->
+  <!-- Callout Contact Final (Version Bateau Origami) -->
+  <CalloutSection
+    variant="boat"
+    tagline="Besoin d'un conseil ?"
+    title="Je suis à votre écoute"
+    description="Vous hésitez entre plusieurs programmes ou souhaitez en savoir plus sur les modalités d'accompagnement e-learning ? N'hésitez pas à me contacter pour échanger sur votre projet."
+    buttonText="Me contacter"
+    buttonHref="/contact"
+  />
+</MainLayout>
