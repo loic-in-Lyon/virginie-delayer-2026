@@ -25,6 +25,13 @@ const {
     <meta name="author" content="Virginie Delayer" />
     <title>{title}</title>
     <meta name="description" content={description} />
+
+    <!-- URL Canonique dynamique -->
+    <link
+      rel="canonical"
+      href={new URL(Astro.url.pathname, "https://www.virginie-delayer.com")}
+    />
+
     <link rel="icon" type="image/avif" href="/logo-60.avif" />
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
   </head>
