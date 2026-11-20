@@ -11,12 +11,22 @@ const formationsDistance = await getCollection(
 ---
 
 <div class="card max-w-2xl mx-auto text-left p-6 sm:p-10">
-  <form
-    action="https://formspree.io/f/ton-id-formspree"
-    method="POST"
-    id="contactForm"
-    class="space-y-6"
-  >
+  <form method="POST" id="contactForm" class="space-y-6">
+    <!-- Honeypot : hors écran, ignoré par les humains, souvent rempli par les bots -->
+    <div
+      class="absolute -left-[9999px] top-auto w-px h-px overflow-hidden"
+      aria-hidden="true"
+    >
+      <label for="company">Société</label>
+      <input
+        type="text"
+        id="company"
+        name="company"
+        tabindex="-1"
+        autocomplete="off"
+      />
+    </div>
+
     <!-- 1. Type de demande -->
     <div class="space-y-2">
       <label for="category" class="block text-sm font-medium text-stone-700">
@@ -28,14 +38,16 @@ const formationsDistance = await getCollection(
         required
         class="w-full rounded-md border border-stone-200 bg-white/90 px-4 py-3 text-stone-800 shadow-sm focus:border-stone-500 focus:outline-none focus:ring-1 focus:ring-stone-500"
       >
-        <option value="" disabled selected>-- Choisissez une option --</option>
+        <option value="" disabled selected>
+          -- Choisissez une option --
+        </option>
         <option value="soin">Réserver un Soin / Massage bien-être</option>
-        <option value="formation"
-          >S'inscrire à une Formation en présentiel</option
-        >
-        <option value="formation-distance"
-          >Suivre une Formation en ligne (E-learning)</option
-        >
+        <option value="formation">
+          S'inscrire à une Formation en présentiel
+        </option>
+        <option value="formation-distance">
+          Suivre une Formation en ligne (E-learning)
+        </option>
         <option value="renseignement">Question / Renseignement général</option>
       </select>
     </div>
@@ -62,8 +74,7 @@ const formationsDistance = await getCollection(
       <div
         class="font-serif font-bold text-stone-900 text-base"
         id="recapTitle"
-      >
-      </div>
+      ></div>
       <p id="recapDetails" class="text-xs text-stone-500"></p>
       <p id="recapResume" class="pt-1 italic"></p>
     </div>
@@ -71,9 +82,9 @@ const formationsDistance = await getCollection(
     <!-- 4. Coordonnées -->
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
       <div class="space-y-2">
-        <label for="name" class="block text-sm font-medium text-stone-700"
-          >Prénom & Nom *</label
-        >
+        <label for="name" class="block text-sm font-medium text-stone-700">
+          Prénom & Nom *
+        </label>
         <input
           type="text"
           id="name"
@@ -85,9 +96,9 @@ const formationsDistance = await getCollection(
       </div>
 
       <div class="space-y-2">
-        <label for="email" class="block text-sm font-medium text-stone-700"
-          >Email *</label
-        >
+        <label for="email" class="block text-sm font-medium text-stone-700">
+          Email *
+        </label>
         <input
           type="email"
           id="email"
@@ -100,9 +111,9 @@ const formationsDistance = await getCollection(
     </div>
 
     <div class="space-y-2">
-      <label for="phone" class="block text-sm font-medium text-stone-700"
-        >Téléphone (Optionnel - Pour être rappelé)</label
-      >
+      <label for="phone" class="block text-sm font-medium text-stone-700">
+        Téléphone (Optionnel - Pour être rappelé)
+      </label>
       <input
         type="tel"
         id="phone"
@@ -135,9 +146,34 @@ const formationsDistance = await getCollection(
     </div>
   </form>
 </div>
-
 <!-- Données JSON injectées proprement pour le script -->
 <script is:inline define:vars={{ soins, formations, formationsDistance }}>
+  const form = document.getElementById("contactForm");
+  const honeypotInput = document.getElementById("company");
+  let firstInteractedAt = null;
+  const MIN_INTERACTION_DELAY_MS = 2500;
+
+  const markInteraction = () => {
+    if (firstInteractedAt === null) {
+      firstInteractedAt = Date.now();
+    }
+  };
+
+  form?.addEventListener("focusin", markInteraction);
+  form?.addEventListener("change", markInteraction);
+
+  form?.addEventListener("submit", (e) => {
+    const isBotHoneypot = Boolean(honeypotInput?.value.trim());
+    const hasNoInteraction = firstInteractedAt === null;
+    const isTooFast =
+      firstInteractedAt !== null &&
+      Date.now() - firstInteractedAt < MIN_INTERACTION_DELAY_MS;
+
+    if (isBotHoneypot || hasNoInteraction || isTooFast) {
+      e.preventDefault();
+    }
+  });
+
   const categorySelect = document.getElementById("category");
   const serviceWrapper = document.getElementById("serviceSelectWrapper");
   const serviceSelect = document.getElementById("service");
@@ -186,7 +222,7 @@ const formationsDistance = await getCollection(
       const selectedItem = dataStore[category].find((i) => i.id === selectedId);
       if (selectedItem) {
         recapTitle.textContent = selectedItem.data.title;
-        recapDetails.textContent = `⏱ Durée : ${selectedItem.data.duree} | 💶 Tarif : ${selectedItem.data.prix} €`;
+        recapDetails.textContent = `Durée : ${selectedItem.data.duree} | Tarif : ${selectedItem.data.prix} €`;
         recapResume.textContent =
           selectedItem.data.resume || selectedItem.data.subtitle || "";
         recapCard.classList.remove("hidden");
